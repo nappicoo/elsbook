@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>🍬 ELS BOOK · Quiz 2</title>
+    <style>
+        /* Same styles as text1 – copied for consistency */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --pink: #ff8eb5;
+            --pink-light: #ffd1e0;
+            --pink-dark: #f26b8f;
+            --purple: #c9a7eb;
+            --purple-light: #e8d5f5;
+            --purple-dark: #a87bc7;
+            --white: #fff9fc;
+            --text: #2d1b30;
+            --shadow: 0 8px 30px rgba(255, 140, 180, 0.15);
+            --radius: 24px;
+            --transition: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --font: 'Segoe UI', 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: var(--font);
+            background: linear-gradient(145deg, #fce4f0 0%, #f3d9fa 50%, #fce4f0 100%);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+        #candy-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .candy-float {
+            position: absolute;
+            font-size: 2.5rem;
+            opacity: 0.12;
+            animation: float-candy var(--dur, 8s) ease-in-out infinite alternate;
+        }
+        @keyframes float-candy {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            100% {
+                transform: translate(30px, -40px) rotate(15deg) scale(1.1);
+            }
+        }
+        .heart-float {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.10;
+            animation: float-heart var(--dur, 10s) ease-in-out infinite alternate;
+        }
+        @keyframes float-heart {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(-20px, -30px) scale(1.2);
+            }
+        }
+        .sparkle-star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ffb3d1;
+            border-radius: 50%;
+            box-shadow: 0 0 12px 4px rgba(255, 140, 180, 0.2);
+            animation: twinkle-star 2s ease-in-out infinite alternate;
+        }
+        @keyframes twinkle-star {
+            0% {
+                opacity: 0.1;
+                transform: scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+        .app-wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 18px 40px;
+        }
+        .header {
+            text-align: center;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(16px);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 16px;
+        }
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--purple-dark);
+            letter-spacing: 1px;
+        }
+        .header .sub {
+            font-size: 0.85rem;
+            color: var(--purple-dark);
+            opacity: 0.7;
+        }
+        .header .sub span {
+            color: var(--pink-dark);
+            font-weight: 600;
+        }
+        .quote-box {
+            background: rgba(255, 255, 255, 0.5);
+            border-left: 4px solid var(--pink);
+            padding: 12px 18px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            font-style: italic;
+            color: var(--purple-dark);
+            font-size: 0.95rem;
+            backdrop-filter: blur(4px);
+        }
+        .quote-box .q-text {
+            color: var(--text);
+            font-weight: 300;
+            margin-right: 6px;
+        }
+        .toggle-wrapper {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: var(--radius);
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(4px);
+        }
+        .toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 140, 180, 0.15);
+            border: 1px solid rgba(255, 140, 180, 0.2);
+            color: var(--pink-dark);
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+        .toggle-btn:hover {
+            background: rgba(255, 140, 180, 0.25);
+            transform: scale(1.02);
+        }
+        .toggle-btn.active {
+            background: var(--pink);
+            color: white;
+            border-color: var(--pink);
+        }
+        .passage-content {
+            display: none;
+            margin-top: 14px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: var(--radius);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .passage-content.open {
+            display: block;
+        }
+        .passage-content p {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+        .passage-content .translation {
+            color: var(--purple-dark);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding-top: 12px;
+            margin-top: 12px;
+        }
+        .passage-content .translation strong {
+            color: var(--pink-dark);
+        }
+        .quiz-area {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(16px);
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 24px 20px;
+            box-shadow: var(--shadow);
+        }
+        .quiz-type-selector {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .quiz-type-btn {
+            padding: 8px 20px;
+            border-radius: 40px;
+            border: 2px solid rgba(168, 123, 199, 0.2);
+            background: transparent;
+            color: var(--purple-dark);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        .quiz-type-btn:hover {
+            border-color: var(--pink);
+            color: var(--pink-dark);
+            transform: scale(1.02);
+        }
+        .quiz-type-btn.active {
+            background: linear-gradient(135deg, var(--pink), var(--purple));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 20px rgba(255, 140, 180, 0.2);
+        }
+        .progress-stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 8px 12px;
+            margin-bottom: 16px;
+            font-size: 0.85rem;
+            color: var(--purple-dark);
+        }
+        .progress-stats .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 4px 12px;
+            border-radius: 30px;
+        }
+        .progress-stats .stat-item .num {
+            font-weight: 700;
+        }
+        .progress-stats .stat-item .num.gold {
+            color: var(--purple);
+        }
+        .progress-stats .stat-item .num.pink {
+            color: var(--pink-dark);
+        }
+        .progress-stats .stat-item .num.green {
+            color: #4caf50;
+        }
+        .progress-stats .stat-item .num.red {
+            color: #f44336;
+        }
+        .progress-bar-wrap {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--pink), var(--purple));
+            border-radius: 12px;
+            transition: width 0.5s ease;
+        }
+        .question-block {
+            margin-bottom: 20px;
+        }
+        .question-number {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--purple);
+            margin-bottom: 6px;
+        }
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 14px;
+            color: var(--text);
+        }
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+        .option-item:hover {
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(1.01);
+        }
+        .option-item .letter {
+            font-weight: 700;
+            color: var(--purple);
+            min-width: 24px;
+        }
+        .option-item.selected {
+            border-color: var(--pink);
+            background: rgba(255, 140, 180, 0.1);
+        }
+        .option-item.correct {
+            border-color: #4caf50;
+            background: rgba(76, 175, 80, 0.1);
+        }
+        .option-item.wrong {
+            border-color: #f44336;
+            background: rgba(244, 67, 54, 0.1);
+        }
+        .option-item.disabled {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+        .option-item .check-mark {
+            margin-left: auto;
+            font-size: 1.2rem;
+        }
+        .fill-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+        .fill-group input {
+            flex: 1;
+            min-width: 180px;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 14px;
+            color: var(--text);
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+        }
+        .fill-group input:focus {
+            border-color: var(--pink);
+            box-shadow: 0 0 20px rgba(255, 140, 180, 0.1);
+        }
+        .fill-group input:disabled {
+            opacity: 0.5;
+        }
+        .fill-group .check-btn {
+            padding: 10px 24px;
+            background: linear-gradient(135deg, var(--pink), var(--purple));
+            color: white;
+            border: none;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(255, 140, 180, 0.2);
+        }
+        .fill-group .check-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(255, 140, 180, 0.3);
+        }
+        .fill-group .check-btn:disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        .fill-feedback {
+            margin-top: 10px;
+            font-size: 0.95rem;
+            padding: 8px 12px;
+            border-radius: 12px;
+        }
+        .fill-feedback.correct {
+            color: #4caf50;
+            background: rgba(76, 175, 80, 0.05);
+        }
+        .fill-feedback.wrong {
+            color: #f44336;
+            background: rgba(244, 67, 54, 0.05);
+        }
+        .next-btn-wrapper {
+            text-align: center;
+            margin-top: 16px;
+        }
+        .next-btn {
+            padding: 10px 32px;
+            border: none;
+            border-radius: 40px;
+            background: linear-gradient(135deg, var(--pink), var(--purple));
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px rgba(255, 140, 180, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .next-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 30px rgba(255, 140, 180, 0.3);
+        }
+        .next-btn:disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .action-btn {
+            display: inline-block;
+            padding: 14px 40px;
+            border: none;
+            border-radius: 60px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .action-btn.start {
+            background: linear-gradient(135deg, var(--pink), var(--purple));
+            color: white;
+            box-shadow: 0 4px 30px rgba(255, 140, 180, 0.2);
+        }
+        .action-btn.start:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 40px rgba(255, 140, 180, 0.3);
+        }
+        .action-btn.start::after {
+            content: '🍭';
+            margin-left: 8px;
+        }
+        .action-btn.restart {
+            background: rgba(255, 255, 255, 0.3);
+            color: var(--purple-dark);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-top: 16px;
+        }
+        .action-btn.restart:hover {
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(1.02);
+        }
+        .btn-wrapper {
+            text-align: center;
+            margin: 20px 0 10px;
+        }
+        .mistakes-summary {
+            margin-top: 20px;
+            padding: 16px;
+            background: rgba(244, 67, 54, 0.05);
+            border: 1px solid rgba(244, 67, 54, 0.2);
+            border-radius: var(--radius);
+        }
+        .mistakes-summary h3 {
+            color: #f44336;
+            margin-bottom: 10px;
+        }
+        .mistake-item {
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+            font-size: 0.9rem;
+        }
+        .mistake-item .wrong-answer {
+            color: #f44336;
+        }
+        .mistake-item .correct-answer {
+            color: #4caf50;
+        }
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            .quiz-area {
+                padding: 16px 14px;
+            }
+            .option-item {
+                font-size: 0.85rem;
+                padding: 8px 12px;
+            }
+            .fill-group input {
+                min-width: 120px;
+                font-size: 0.9rem;
+            }
+            .action-btn {
+                padding: 12px 28px;
+                font-size: 0.95rem;
+            }
+            .progress-stats {
+                font-size: 0.75rem;
+            }
+            .question-text {
+                font-size: 1rem;
+            }
+            .quiz-type-btn {
+                font-size: 0.8rem;
+                padding: 6px 14px;
+            }
+        }
+        @media (max-width: 400px) {
+            .header h1 {
+                font-size: 1.2rem;
+            }
+            .fill-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .fill-group .check-btn {
+                width: 100%;
+            }
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f3d9fa;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--pink);
+            border-radius: 8px;
+        }
+        ::selection {
+            background: var(--pink);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="candy-bg" aria-hidden="true">
+        <div class="candy-float" style="left:5%; top:10%; --dur:7s;">🍬</div>
+        <div class="candy-float" style="right:8%; top:20%; --dur:9s;">🍭</div>
+        <div class="candy-float" style="left:15%; bottom:25%; --dur:11s;">🍫</div>
+        <div class="candy-float" style="right:20%; bottom:30%; --dur:8s;">🍬</div>
+        <div class="heart-float" style="left:10%; top:40%; --dur:10s;">💕</div>
+        <div class="heart-float" style="right:5%; bottom:15%; --dur:12s;">💗</div>
+        <div class="heart-float" style="left:30%; top:5%; --dur:9s;">💖</div>
+        <div class="sparkle-star" style="left:20%; top:15%;"></div>
+        <div class="sparkle-star" style="left:60%; top:10%;"></div>
+        <div class="sparkle-star" style="right:25%; bottom:20%;"></div>
+        <div class="sparkle-star" style="left:45%; bottom:35%;"></div>
+    </div>
+    <div class="app-wrapper">
+        <header class="header">
+            <h1>📖 ELS BOOK · Quiz 2</h1>
+            <div class="sub">✨ done by <span>nappicoo</span> with love 💕</div>
+        </header>
+        <div class="quote-box" id="quoteBox">
+            <span class="q-text">“</span><span id="quoteText">The mind is not a vessel to be filled, but a fire to be kindled.</span><span class="q-text">”</span>
+        </div>
+        <div class="toggle-wrapper">
+            <button class="toggle-btn" id="toggleTextBtn">📖 Read full text</button>
+            <div class="passage-content" id="passageContent">
+                <p><strong>TO BRING BACK LOST MEMORIES</strong></p>
+                <p>Our unconscious mind contains many millions of past experiences that, so far as our conscious mind knows, are lost forever. By means of several devices, we now know how to bring back lost memories. One method is "free association", used by psychiatrists. If a patient lets his conscious mind wander at will, it can give him clues to forgotten things which, if skilfully pursued by the doctor, will bring up whole networks of lost ideas and forgotten terrors. There are certain drugs which also help in this process; hypnotism, too, can be of tremendous value in exploring a patient's unconscious.</p>
+                <div class="translation">
+                    <strong>🇺🇿 O‘zbekcha tarjimasi:</strong><br>
+                    Bizning ongsiz ongimiz millionlab o‘tmish tajribalarini o‘z ichiga oladi, ular ongli ongimiz bilganicha, abadiy yo‘qolgan. Bir necha vositalar yordamida biz endi yo‘qolgan xotiralarni qaytarishni bilamiz. Usullardan biri – psixiatrlar tomonidan qo‘llaniladigan "erkin assotsiatsiya"dir. Agar bemor ongli ongini o‘z ixtiyori bilan kezib yurishiga ruxsat bersa, bu unga unutilgan narsalar haqida maslahatlar berishi mumkin, agar shifokor tomonidan mohirlik bilan davom ettirilsa, bu yo‘qolgan g‘oyalar va unutilgan dahshatlarning butun tarmoqlarini ko‘tarib chiqadi. Bu jarayonda yordam beradigan ba'zi dorilar ham mavjud; gipnoz ham bemorning ongsizligini o‘rganishda juda katta ahamiyatga ega bo‘lishi mumkin.
+                </div>
+            </div>
+        </div>
+        <div class="quiz-area" id="quizArea">
+            <div class="quiz-type-selector" id="quizTypeSelector">
+                <button class="quiz-type-btn active" data-type="main">📖 Main Quiz</button>
+                <button class="quiz-type-btn" data-type="vocab">📝 Vocabulary</button>
+            </div>
+            <div id="statsContainer" class="hidden">
+                <div class="progress-stats">
+                    <span class="stat-item">✅ Correct: <span class="num green" id="correctCount">0</span></span>
+                    <span class="stat-item">❌ Wrong: <span class="num red" id="wrongCount">0</span></span>
+                    <span class="stat-item">⏳ Remaining: <span class="num" id="remainingCount">0</span></span>
+                    <span class="stat-item">🎯 Accuracy: <span class="num gold" id="accuracyDisplay">0%</span></span>
+                </div>
+                <div class="progress-bar-wrap">
+                    <div class="progress-bar-fill" id="progressFill"></div>
+                </div>
+                <div style="text-align:right; font-size:0.75rem; color:var(--purple);">
+                    <span id="progressLabel">0 / 0</span>
+                </div>
+            </div>
+            <div id="questionContainer">
+                <div class="btn-wrapper" id="startBtnWrapper">
+                    <button class="action-btn start" id="startBtn">✨ Start Quiz</button>
+                </div>
+                <div id="questionDisplay" class="hidden"></div>
+                <div id="finishDisplay" class="hidden"></div>
+            </div>
+            <div class="btn-wrapper" id="restartBtnWrapper">
+                <button class="action-btn restart" id="restartBtn">🔄 Restart Quiz</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // ============================================================
+        //  DATA – TO BRING BACK LOST MEMORIES
+        // ============================================================
+        const MAIN_QUESTIONS = [
+            {
+                type: 'mcq',
+                question: '1. According to the passage, it is possible......',
+                options: [
+                    'A) to use drugs to cure patients of their past errors',
+                    'B) to bring our lost memories to the surface through several methods',
+                    'C) that psychological problems develop through the inability to forget certain things',
+                    'D) that hypnotism can cause a patient to forget past errors',
+                    'E) for most people to choose to forget about their past experiences'
+                ],
+                correct: 'B'
+            },
+            {
+                type: 'mcq',
+                question: '2. In the method of "free association"......',
+                options: [
+                    'A) unpleasant memories are pushed into the unconscious mind',
+                    'B) the use of hypnotism is essential',
+                    'C) certain drugs are more effective than hypnotism',
+                    'D) all one\'s millions of past experiences are easily recalled',
+                    'E) the patient\'s co-operation is needed'
+                ],
+                correct: 'E'
+            },
+            {
+                type: 'mcq',
+                question: '3. We can conclude from the passage that......',
+                options: [
+                    'A) most psychological disorders are caused by the inability to forget certain things',
+                    'B) only a skilful doctor can open up one\'s unconscious mind',
+                    'C) our unconscious mind only contains the things we don\'t want to remember',
+                    'D) many of one\'s past experiences are stored in one\'s unconscious mind',
+                    'E) a patient can\'t be made aware of his forgotten experiences without drugs or hypnotism'
+                ],
+                correct: 'D'
+            },
+            {
+                type: 'fill',
+                question: '1. I\'ve decided not to ...... the matter just now, but don\'t think I\'ve forgotten about it.',
+                correct: 'pursue',
+                accept: ['pursue']
+            },
+            {
+                type: 'fill',
+                question: '2. All of you have put ...... effort into the campaign, so it\'s thanks to you that everything is going so well.',
+                correct: 'tremendous',
+                accept: ['tremendous']
+            },
+            {
+                type: 'fill',
+                question: '3. The chairman has given us no ...... as to what he\'s going to say at the meeting, so we\'ll just have to wait and see.',
+                correct: 'clue',
+                accept: ['clue']
+            },
+            {
+                type: 'fill',
+                question: '4. The language teacher has a number of ...... which she can employ in order to get her students to speak.',
+                correct: 'devices',
+                accept: ['devices', 'device']
+            },
+            {
+                type: 'fill',
+                question: '5. The lecture was so boring that on several occasions I realized that my attention had started to ......',
+                correct: 'wander',
+                accept: ['wander']
+            }
+        ];
+
+        const VOCAB_QUESTIONS = [
+            { uzbek: 'abadiy', correct: 'forever', accept: ['forever', 'for ever'] },
+            { uzbek: 'vosita, usul', correct: 'device', accept: ['device', 'devices'] },
+            { uzbek: 'kezmoq, yurmoq (ongni)', correct: 'wander', accept: ['wander'] },
+            { uzbek: "o‘z ixtiyori bilan", correct: 'at will', accept: ['at will'] },
+            { uzbek: 'maslahat, ishora', correct: 'clue', accept: ['clue'] },
+            { uzbek: 'davom ettirmoq, ta‘qib qilmoq', correct: 'pursue', accept: ['pursue'] },
+            { uzbek: 'tarmoq', correct: 'network', accept: ['network', 'networks'] },
+            { uzbek: 'dahshat', correct: 'terror', accept: ['terror', 'terrors'] },
+            { uzbek: 'katta, ulkan', correct: 'tremendous', accept: ['tremendous'] }
+        ];
+
+        // ============================================================
+        //  STATE & LOGIC (exactly the same as text1)
+        // ============================================================
+        let currentQuizType = 'main';
+        let shuffledQuestions = [];
+        let currentIndex = 0;
+        let correctAnswers = 0;
+        let wrongAnswers = 0;
+        let mistakes = [];
+        let quizStarted = false;
+        let quizFinished = false;
+        let answered = false;
+        let waitingForNext = false;
+
+        const startBtn = document.getElementById('startBtn');
+        const startBtnWrapper = document.getElementById('startBtnWrapper');
+        const questionDisplay = document.getElementById('questionDisplay');
+        const finishDisplay = document.getElementById('finishDisplay');
+        const statsContainer = document.getElementById('statsContainer');
+        const correctCountEl = document.getElementById('correctCount');
+        const wrongCountEl = document.getElementById('wrongCount');
+        const remainingCountEl = document.getElementById('remainingCount');
+        const accuracyDisplay = document.getElementById('accuracyDisplay');
+        const progressFill = document.getElementById('progressFill');
+        const progressLabel = document.getElementById('progressLabel');
+        const restartBtn = document.getElementById('restartBtn');
+        const toggleTextBtn = document.getElementById('toggleTextBtn');
+        const passageContent = document.getElementById('passageContent');
+
+        const quotes = [
+            "The mind is not a vessel to be filled, but a fire to be kindled. – Plutarch",
+            "The only true wisdom is in knowing you know nothing. – Socrates",
+            "Education is the kindling of a flame, not the filling of a vessel. – Socrates",
+            "The more that you read, the more things you will know. – Dr. Seuss",
+            "Knowledge is power. – Francis Bacon"
+        ];
+        let quoteIndex = 0;
+        const quoteEl = document.getElementById('quoteText');
+        function rotateQuote() {
+            quoteEl.textContent = quotes[quoteIndex % quotes.length];
+            quoteIndex++;
+        }
+        rotateQuote();
+        setInterval(rotateQuote, 10000);
+
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function switchQuizType(type) {
+            if (quizStarted && !quizFinished) {
+                if (!confirm('Changing quiz type will restart. Continue?')) return;
+            }
+            currentQuizType = type;
+            document.querySelectorAll('.quiz-type-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.type === type);
+            });
+            resetQuizState();
+            startBtnWrapper.classList.remove('hidden');
+            questionDisplay.classList.add('hidden');
+            finishDisplay.classList.add('hidden');
+            statsContainer.classList.add('hidden');
+            progressFill.style.width = '0%';
+            progressLabel.textContent = '0 / 0';
+            correctCountEl.textContent = '0';
+            wrongCountEl.textContent = '0';
+            remainingCountEl.textContent = '0';
+            accuracyDisplay.textContent = '0%';
+            questionDisplay.innerHTML = '';
+        }
+
+        function startQuiz() {
+            const baseQuestions = (currentQuizType === 'main') ? MAIN_QUESTIONS : VOCAB_QUESTIONS.map(q => ({
+                type: 'fill',
+                question: q.uzbek,
+                correct: q.correct,
+                accept: q.accept
+            }));
+            shuffledQuestions = shuffleArray([...baseQuestions]);
+            shuffledQuestions = shuffledQuestions.map(q => {
+                if (q.type === 'mcq') {
+                    const optList = q.options.map(opt => {
+                        const letter = opt.charAt(0);
+                        const text = opt.substring(3);
+                        return { letter, text };
+                    });
+                    const shuffledOpts = shuffleArray([...optList]);
+                    const newOptions = shuffledOpts.map((item, idx) => {
+                        const newLetter = String.fromCharCode(65 + idx);
+                        return `${newLetter}) ${item.text}`;
+                    });
+                    const correctLetter = q.correct;
+                    const correctText = optList.find(o => o.letter === correctLetter).text;
+                    const newCorrectLetter = shuffledOpts.find(o => o.text === correctText).letter;
+                    return { ...q, options: newOptions, correct: newCorrectLetter };
+                }
+                return q;
+            });
+            currentIndex = 0;
+            correctAnswers = 0;
+            wrongAnswers = 0;
+            mistakes = [];
+            quizStarted = true;
+            quizFinished = false;
+            answered = false;
+            waitingForNext = false;
+            startBtnWrapper.classList.add('hidden');
+            statsContainer.classList.remove('hidden');
+            finishDisplay.classList.add('hidden');
+            questionDisplay.classList.remove('hidden');
+            renderQuestion();
+            updateStats();
+        }
+
+        function renderQuestion() {
+            if (currentIndex >= shuffledQuestions.length) {
+                finishQuiz();
+                return;
+            }
+            const q = shuffledQuestions[currentIndex];
+            const total = shuffledQuestions.length;
+            const num = currentIndex + 1;
+
+            let html = `<div class="question-block">`;
+            html += `<div class="question-number">Question ${num} of ${total}</div>`;
+            html += `<div class="question-text">${q.question}</div>`;
+
+            if (q.type === 'mcq') {
+                html += `<div class="options-grid" id="optionsGrid">`;
+                q.options.forEach((opt, idx) => {
+                    const letter = opt.charAt(0);
+                    const text = opt.substring(3);
+                    html += `
+                        <div class="option-item" data-letter="${letter}" data-optindex="${idx}">
+                            <span class="letter">${letter}</span>
+                            <span>${text}</span>
+                            <span class="check-mark"></span>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+            } else {
+                const placeholder = (currentQuizType === 'vocab') ? 'Type English translation...' : 'Type your answer...';
+                html += `
+                    <div class="fill-group">
+                        <input type="text" id="fillInput" placeholder="${placeholder}" autocomplete="off" />
+                        <button class="check-btn" id="fillCheckBtn">Check</button>
+                    </div>
+                    <div class="fill-feedback" id="fillFeedback"></div>
+                `;
+            }
+            html += `<div class="next-btn-wrapper hidden" id="nextBtnWrapper">
+                        <button class="next-btn" id="nextBtn">➡️ Next</button>
+                    </div>`;
+            html += `</div>`;
+            questionDisplay.innerHTML = html;
+
+            if (q.type === 'mcq') {
+                const options = document.querySelectorAll('.option-item');
+                options.forEach(opt => {
+                    opt.addEventListener('click', function() {
+                        if (answered || waitingForNext) return;
+                        handleMCQClick(this);
+                    });
+                });
+            } else {
+                const input = document.getElementById('fillInput');
+                const checkBtn = document.getElementById('fillCheckBtn');
+                const feedback = document.getElementById('fillFeedback');
+                function checkFill() {
+                    if (answered || waitingForNext) return;
+                    const userAnswer = input.value.trim();
+                    if (userAnswer === '') return;
+                    handleFillSubmit(userAnswer, input, checkBtn, feedback);
+                }
+                checkBtn.addEventListener('click', checkFill);
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        checkFill();
+                    }
+                });
+                setTimeout(() => input.focus(), 100);
+            }
+
+            const nextBtn = document.getElementById('nextBtn');
+            if (nextBtn) {
+                nextBtn.addEventListener('click', function() {
+                    if (!waitingForNext) return;
+                    currentIndex++;
+                    waitingForNext = false;
+                    answered = false;
+                    renderQuestion();
+                });
+            }
+
+            answered = false;
+            waitingForNext = false;
+            updateStats();
+        }
+
+        function handleMCQClick(optEl) {
+            const q = shuffledQuestions[currentIndex];
+            const selectedLetter = optEl.dataset.letter;
+            const isCorrect = (selectedLetter === q.correct);
+            const allOpts = document.querySelectorAll('.option-item');
+            allOpts.forEach(el => el.classList.add('disabled'));
+
+            allOpts.forEach(el => {
+                const letter = el.dataset.letter;
+                if (letter === q.correct) {
+                    el.classList.add('correct');
+                    el.querySelector('.check-mark').textContent = '✅';
+                } else if (letter === selectedLetter && !isCorrect) {
+                    el.classList.add('wrong');
+                    el.querySelector('.check-mark').textContent = '❌';
+                }
+                if (letter === selectedLetter) {
+                    el.classList.add('selected');
+                }
+            });
+
+            if (isCorrect) {
+                correctAnswers++;
+            } else {
+                wrongAnswers++;
+                const correctText = q.options.find(o => o.charAt(0) === q.correct).substring(3);
+                mistakes.push({
+                    question: q.question,
+                    userAnswer: selectedLetter + ') ' + optEl.querySelector('span:last-child').textContent.trim(),
+                    correctAnswer: q.correct + ') ' + correctText
+                });
+            }
+
+            answered = true;
+            waitingForNext = true;
+            const nextWrapper = document.getElementById('nextBtnWrapper');
+            if (nextWrapper) nextWrapper.classList.remove('hidden');
+            updateStats();
+        }
+
+        function handleFillSubmit(userAnswer, input, checkBtn, feedback) {
+            const q = shuffledQuestions[currentIndex];
+            const accepted = q.accept || [q.correct];
+            const isCorrect = accepted.some(a => userAnswer.toLowerCase().trim() === a.toLowerCase().trim());
+
+            input.disabled = true;
+            checkBtn.disabled = true;
+
+            if (isCorrect) {
+                feedback.className = 'fill-feedback correct';
+                feedback.textContent = '✅ Correct! Well done!';
+                correctAnswers++;
+            } else {
+                feedback.className = 'fill-feedback wrong';
+                feedback.textContent = `❌ Wrong. The correct answer is: "${q.correct}"`;
+                wrongAnswers++;
+                mistakes.push({
+                    question: q.question,
+                    userAnswer: userAnswer,
+                    correctAnswer: q.correct
+                });
+            }
+
+            answered = true;
+            waitingForNext = true;
+            const nextWrapper = document.getElementById('nextBtnWrapper');
+            if (nextWrapper) nextWrapper.classList.remove('hidden');
+            updateStats();
+        }
+
+        function updateStats() {
+            const total = shuffledQuestions.length;
+            const answeredCount = correctAnswers + wrongAnswers;
+            const remaining = total - answeredCount;
+            const accuracy = answeredCount === 0 ? 0 : Math.round((correctAnswers / answeredCount) * 100);
+
+            correctCountEl.textContent = correctAnswers;
+            wrongCountEl.textContent = wrongAnswers;
+            remainingCountEl.textContent = remaining;
+            accuracyDisplay.textContent = accuracy + '%';
+
+            const progress = total === 0 ? 0 : (answeredCount / total) * 100;
+            progressFill.style.width = progress + '%';
+            progressLabel.textContent = `${answeredCount} / ${total}`;
+        }
+
+        function finishQuiz() {
+            quizFinished = true;
+            questionDisplay.classList.add('hidden');
+            statsContainer.classList.add('hidden');
+
+            let html = `<div style="text-align:center; padding:10px 0;">`;
+            html += `<h2 style="color:var(--purple-dark);">🎉 Quiz Complete!</h2>`;
+            const total = shuffledQuestions.length;
+            const accuracy = total === 0 ? 0 : Math.round((correctAnswers / total) * 100);
+            html += `<p style="margin:10px 0; font-size:1.1rem;">✅ Correct: ${correctAnswers} &nbsp;|&nbsp; ❌ Wrong: ${wrongAnswers} &nbsp;|&nbsp; 🎯 Accuracy: ${accuracy}%</p>`;
+
+            if (mistakes.length > 0) {
+                html += `<div class="mistakes-summary"><h3>📝 Mistakes Review</h3>`;
+                mistakes.forEach((m, idx) => {
+                    html += `
+                        <div class="mistake-item">
+                            <strong>Q${idx+1}:</strong> ${m.question}<br />
+                            <span class="wrong-answer">Your answer: ${m.userAnswer}</span><br />
+                            <span class="correct-answer">Correct answer: ${m.correctAnswer}</span>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+            } else {
+                html += `<p style="color:#4caf50; font-size:1.2rem;">🌟 Perfect! No mistakes!</p>`;
+            }
+            html += `</div>`;
+            finishDisplay.innerHTML = html;
+            finishDisplay.classList.remove('hidden');
+        }
+
+        function resetQuizState() {
+            quizStarted = false;
+            quizFinished = false;
+            shuffledQuestions = [];
+            currentIndex = 0;
+            correctAnswers = 0;
+            wrongAnswers = 0;
+            mistakes = [];
+            answered = false;
+            waitingForNext = false;
+            statsContainer.classList.add('hidden');
+            questionDisplay.classList.add('hidden');
+            finishDisplay.classList.add('hidden');
+            startBtnWrapper.classList.remove('hidden');
+            progressFill.style.width = '0%';
+            progressLabel.textContent = '0 / 0';
+            correctCountEl.textContent = '0';
+            wrongCountEl.textContent = '0';
+            remainingCountEl.textContent = '0';
+            accuracyDisplay.textContent = '0%';
+            questionDisplay.innerHTML = '';
+        }
+
+        function restartQuiz() {
+            resetQuizState();
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        restartBtn.addEventListener('click', restartQuiz);
+        document.querySelectorAll('.quiz-type-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                switchQuizType(this.dataset.type);
+            });
+        });
+        toggleTextBtn.addEventListener('click', function() {
+            passageContent.classList.toggle('open');
+            this.classList.toggle('active');
+            this.textContent = passageContent.classList.contains('open') ? '📖 Hide full text' : '📖 Read full text';
+        });
+
+        // ===== CANDY SPARKLE GENERATOR =====
+        (function addExtraSparkles() {
+            const bg = document.getElementById('candy-bg');
+            for (let i = 0; i < 30; i++) {
+                const sp = document.createElement('div');
+                sp.className = 'sparkle-star';
+                sp.style.left = Math.random() * 100 + '%';
+                sp.style.top = Math.random() * 100 + '%';
+                sp.style.animationDelay = Math.random() * 3 + 's';
+                bg.appendChild(sp);
+            }
+        })();
+
+        console.log('🍬 ELS BOOK · Quiz 2 (Candy) loaded!');
+        console.log('💕 done by nappicoo with love');
+    </script>
+</body>
+  </html>
