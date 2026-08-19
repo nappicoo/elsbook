@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>🍬 ELS BOOK · Candy Pink</title>
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --pink: #ff8eb5;
+            --pink-light: #ffd1e0;
+            --pink-dark: #f26b8f;
+            --purple: #c9a7eb;
+            --purple-light: #e8d5f5;
+            --purple-dark: #a87bc7;
+            --white: #fff9fc;
+            --text: #2d1b30;
+            --shadow: 0 8px 30px rgba(255, 140, 180, 0.15);
+            --radius: 24px;
+            --transition: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            /* 🔥 NEW: SUPER BOLD SYSTEM FONT */
+            --font: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: var(--font) !important;
+            font-weight: 700 !important;
+            background: linear-gradient(145deg, #fce4f0 0%, #f3d9fa 50%, #fce4f0 100%);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+        /* all text elements now inherit bold */
+        h1, h2, h3, h4, p, span, div, button, input, .card-title, .card-preview, .question-text, .option-item, .stat, .badge {
+            font-weight: 700 !important;
+        }
+        /* ——— rest of CSS (candy floats, cards, etc.) ——— */
+        #candy-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .candy-float {
+            position: absolute;
+            font-size: 2.5rem;
+            opacity: 0.12;
+            animation: float-candy var(--dur, 8s) ease-in-out infinite alternate;
+        }
+        @keyframes float-candy {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            100% {
+                transform: translate(30px, -40px) rotate(15deg) scale(1.1);
+            }
+        }
+        .heart-float {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.10;
+            animation: float-heart var(--dur, 10s) ease-in-out infinite alternate;
+        }
+        @keyframes float-heart {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(-20px, -30px) scale(1.2);
+            }
+        }
+        .sparkle-star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ffb3d1;
+            border-radius: 50%;
+            box-shadow: 0 0 12px 4px rgba(255, 140, 180, 0.2);
+            animation: twinkle-star 2s ease-in-out infinite alternate;
+        }
+        @keyframes twinkle-star {
+            0% {
+                opacity: 0.1;
+                transform: scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+        .app-wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 18px 40px;
+        }
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(16px);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 8px;
+        }
+        .header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .header-left .top-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .header-left .top-row .icon {
+            font-size: 2.2rem;
+            animation: bounce-candy 3s ease-in-out infinite;
+        }
+        @keyframes bounce-candy {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+        .header-left .top-row h1 {
+            font-size: 2rem;
+            font-weight: 800 !important;
+            color: var(--purple-dark);
+            text-shadow: 0 2px 10px rgba(168, 123, 199, 0.15);
+            letter-spacing: 0.5px;
+        }
+        .header-left .credit {
+            font-size: 0.85rem;
+            font-weight: 700 !important;
+            color: var(--purple-dark);
+            margin-left: 52px;
+            opacity: 0.8;
+        }
+        .header-left .credit span {
+            color: var(--pink-dark);
+            font-weight: 700 !important;
+        }
+        .header-right .badge {
+            padding: 6px 18px;
+            border-radius: 40px;
+            background: rgba(255, 140, 180, 0.15);
+            border: 1px solid rgba(255, 140, 180, 0.2);
+            font-size: 0.9rem;
+            font-weight: 700 !important;
+            color: var(--pink-dark);
+        }
+        .header-right .badge strong {
+            color: var(--purple);
+            font-weight: 700 !important;
+        }
+        .stats-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px 24px;
+            padding: 14px 20px;
+            margin-bottom: 28px;
+            margin-top: 8px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(8px);
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .stats-row .stat {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            font-weight: 700 !important;
+            color: var(--purple-dark);
+        }
+        .stats-row .stat .num {
+            font-weight: 800 !important;
+            font-size: 1.1rem;
+        }
+        .stats-row .stat .num.gold {
+            color: #d4a0d4;
+        }
+        .stats-row .stat .num.pink {
+            color: var(--pink-dark);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 18px;
+        }
+        .card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(6px);
+            border-radius: var(--radius);
+            padding: 18px 16px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 20px rgba(255, 140, 180, 0.05);
+            transition: var(--transition);
+            cursor: pointer;
+            min-height: 110px;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:not(.added) {
+            opacity: 0.5;
+            filter: grayscale(0.3);
+        }
+        .card:not(.added):hover {
+            opacity: 0.7;
+            transform: scale(1.01);
+        }
+        .card.added {
+            border-color: var(--pink);
+            box-shadow: 0 4px 30px rgba(255, 140, 180, 0.15), inset 0 0 30px rgba(255, 200, 220, 0.05);
+            animation: glow-card 3s ease-in-out infinite alternate;
+        }
+        @keyframes glow-card {
+            0% {
+                box-shadow: 0 4px 30px rgba(255, 140, 180, 0.10);
+            }
+            100% {
+                box-shadow: 0 4px 50px rgba(255, 140, 180, 0.25);
+            }
+        }
+        .card.added::after {
+            content: '🍭';
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            font-size: 1.4rem;
+            animation: spin-candy 6s linear infinite;
+        }
+        @keyframes spin-candy {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        .card.added:hover {
+            transform: translateY(-6px) scale(1.02);
+        }
+        .card-number {
+            font-size: 0.7rem;
+            font-weight: 700 !important;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--purple);
+            margin-bottom: 4px;
+        }
+        .card-title {
+            font-size: 1rem;
+            font-weight: 700 !important;
+            color: var(--text);
+            margin-bottom: 4px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .card-preview {
+            font-size: 0.85rem;
+            font-weight: 700 !important;
+            color: var(--purple-dark);
+            opacity: 0.8;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex: 1;
+        }
+        .card-status {
+            margin-top: 10px;
+            font-size: 0.7rem;
+            font-weight: 700 !important;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--purple);
+        }
+        .card-status .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--purple-light);
+        }
+        .card.added .card-status .dot {
+            background: var(--pink);
+            box-shadow: 0 0 16px rgba(255, 140, 180, 0.5);
+            animation: dot-pulse 2s ease-in-out infinite alternate;
+        }
+        @keyframes dot-pulse {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.4);
+            }
+        }
+        .card:not(.added) .card-404 {
+            display: flex;
+        }
+        .card-404 {
+            display: none;
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--purple-dark);
+            font-size: 0.85rem;
+            font-weight: 700 !important;
+            gap: 4px;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+            padding: 12px;
+            text-align: center;
+        }
+        .card:not(.added):active .card-404,
+        .card:not(.added):focus .card-404 {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .card-404 .big {
+            font-size: 2.4rem;
+            line-height: 1;
+            color: var(--pink-dark);
+        }
+        @media (max-width: 700px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .header-left .top-row h1 {
+                font-size: 1.4rem;
+            }
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 12px;
+            }
+            .card {
+                padding: 14px 12px;
+                min-height: 90px;
+            }
+        }
+        @media (max-width: 450px) {
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 10px;
+            }
+            .card-title {
+                font-size: 0.85rem;
+            }
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f3d9fa;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--pink);
+            border-radius: 8px;
+        }
+        ::selection {
+            background: var(--pink);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="candy-bg" aria-hidden="true">
+        <div class="candy-float" style="left:5%; top:10%; --dur:7s;">🍬</div>
+        <div class="candy-float" style="right:8%; top:20%; --dur:9s;">🍭</div>
+        <div class="candy-float" style="left:15%; bottom:25%; --dur:11s;">🍫</div>
+        <div class="candy-float" style="right:20%; bottom:30%; --dur:8s;">🍬</div>
+        <div class="heart-float" style="left:10%; top:40%; --dur:10s;">💕</div>
+        <div class="heart-float" style="right:5%; bottom:15%; --dur:12s;">💗</div>
+        <div class="heart-float" style="left:30%; top:5%; --dur:9s;">💖</div>
+        <div class="sparkle-star" style="left:20%; top:15%;"></div>
+        <div class="sparkle-star" style="left:60%; top:10%;"></div>
+        <div class="sparkle-star" style="right:25%; bottom:20%;"></div>
+        <div class="sparkle-star" style="left:45%; bottom:35%;"></div>
+    </div>
+    <div class="app-wrapper">
+        <header class="header">
+            <div class="header-left">
+                <div class="top-row">
+                    <span class="icon">🍭</span>
+                    <h1>ELS BOOK</h1>
+                </div>
+                <div class="credit">✨ done by <span>nappicoo</span> with love 💕</div>
+            </div>
+            <div class="header-right">
+                <span class="badge">✨ <strong id="addedCount">0</strong> / 200 added</span>
+            </div>
+        </header>
+        <div class="stats-row">
+            <span class="stat">📚 Total texts <span class="num gold">200</span></span>
+            <span class="stat">✅ Added <span class="num pink" id="addedStat">0</span></span>
+            <span class="stat">⏳ Pending <span class="num" id="pendingStat">200</span></span>
+        </div>
+        <div class="grid" id="textGrid"></div>
+    </div>
+    <script>
+        const ADDED_TEXTS = [1, 2];
+        const entries = [];
+        for (let i = 0; i < 200; i++) {
+            const id = i + 1;
+            const isAdded = ADDED_TEXTS.includes(id);
+            entries.push({ id, title: isAdded ? `Text ${id}` : `Text ${id}`, preview: isAdded ? '✨ click to open' : 'coming soon...', added: isAdded });
+        }
+        const grid = document.getElementById('textGrid');
+        const addedCountEl = document.getElementById('addedCount');
+        const addedStatEl = document.getElementById('addedStat');
+        const pendingStatEl = document.getElementById('pendingStat');
+
+        function render() {
+            grid.innerHTML = '';
+            let addedTotal = 0;
+            entries.forEach((entry) => {
+                if (entry.added) addedTotal++;
+                const card = document.createElement('div');
+                card.className = `card ${entry.added ? 'added' : ''}`;
+                card.setAttribute('data-id', entry.id);
+                const num = document.createElement('div');
+                num.className = 'card-number';
+                num.textContent = `#${String(entry.id).padStart(3, '0')}`;
+                const title = document.createElement('div');
+                title.className = 'card-title';
+                title.textContent = entry.title;
+                const preview = document.createElement('div');
+                preview.className = 'card-preview';
+                preview.textContent = entry.preview;
+                const status = document.createElement('div');
+                status.className = 'card-status';
+                const dot = document.createElement('span');
+                dot.className = 'dot';
+                status.appendChild(dot);
+                status.appendChild(document.createTextNode(entry.added ? 'ready' : 'empty'));
+                if (!entry.added) {
+                    const overlay = document.createElement('div');
+                    overlay.className = 'card-404';
+                    overlay.innerHTML = `<div class="big">🍬 404</div><div class="sub">not added yet</div>`;
+                    card.appendChild(overlay);
+                }
+                card.appendChild(num);
+                card.appendChild(title);
+                card.appendChild(preview);
+                card.appendChild(status);
+                card.addEventListener('click', function() {
+                    if (!entry.added) {
+                        const overlay = this.querySelector('.card-404');
+                        if (overlay) {
+                            overlay.style.opacity = '1';
+                            overlay.style.pointerEvents = 'auto';
+                            setTimeout(() => {
+                                overlay.style.opacity = '0';
+                                overlay.style.pointerEvents = 'none';
+                            }, 1200);
+                        }
+                    } else {
+                        window.location.href = `text${entry.id}.html`;
+                    }
+                });
+                grid.appendChild(card);
+            });
+            addedCountEl.textContent = addedTotal;
+            addedStatEl.textContent = addedTotal;
+            pendingStatEl.textContent = 200 - addedTotal;
+        }
+        render();
+        // extra sparkles
+        (function addExtraSparkles() {
+            const bg = document.getElementById('candy-bg');
+            for (let i = 0; i < 30; i++) {
+                const sp = document.createElement('div');
+                sp.className = 'sparkle-star';
+                sp.style.left = Math.random() * 100 + '%';
+                sp.style.top = Math.random() * 100 + '%';
+                sp.style.animationDelay = Math.random() * 3 + 's';
+                bg.appendChild(sp);
+            }
+        })();
+        window.addText = function(id, title, preview) {
+            const idx = id - 1;
+            if (idx >= 0 && idx < entries.length) {
+                entries[idx].title = title || `Text ${id}`;
+                entries[idx].preview = preview || '✨ click to open';
+                entries[idx].added = true;
+                render();
+                console.log(`✅ Added text #${id}: "${entries[idx].title}"`);
+                return true;
+            }
+            console.warn('❌ Invalid id (must be between 1 and 200)');
+            return false;
+        };
+        window.__entries = entries;
+        console.log('🍬 ELS BOOK · Candy Pink (ULTRA BOLD) ready!');
+        console.log('💕 done by nappicoo with love');
+    </script>
+</body>
+  </html>
