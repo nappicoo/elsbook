@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>ELS BOOK · by nappicoo</title>
+    <title>👑 ELS BOOK · Fairy Princess Castle</title>
     <style>
         /* ========== RESET & BASE ========== */
         *,
@@ -15,20 +15,20 @@
         }
 
         :root {
-            --navy: #0b0f2a;
-            --navy-light: #131b44;
-            --navy-glow: #1a2a6a;
-            --pink: #ff2d95;
-            --pink-light: #ff6bcb;
-            --pink-glow: rgba(255, 45, 149, 0.5);
+            --pink-light: #ffe4f0;
+            --pink: #ff6bcb;
+            --pink-dark: #d94a9e;
+            --pink-glow: rgba(255, 107, 203, 0.4);
             --gold: #ffd700;
-            --gold-light: #ffed4a;
-            --gold-glow: rgba(255, 215, 0, 0.5);
-            --text-white: #f0eef8;
-            --text-muted: #8892b0;
-            --card-bg: rgba(255, 255, 255, 0.04);
-            --radius: 14px;
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --gold-light: #fff0b3;
+            --gold-glow: rgba(255, 215, 0, 0.3);
+            --lavender: #d4b8ff;
+            --lavender-glow: rgba(212, 184, 255, 0.2);
+            --text-white: #fff8f5;
+            --text-muted: #d4c8d0;
+            --card-bg: rgba(255, 255, 255, 0.06);
+            --radius: 20px;
+            --transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         html {
@@ -36,8 +36,8 @@
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--navy);
+            font-family: 'Segoe UI', 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
+            background: #1a0a1e;
             color: var(--text-white);
             min-height: 100vh;
             overflow-x: hidden;
@@ -45,232 +45,153 @@
             position: relative;
         }
 
-        /* ========== SPACE BACKGROUND ========== */
-        #space-bg {
+        /* ========== MAGICAL BACKGROUND ========== */
+        #magic-bg {
             position: fixed;
             inset: 0;
             z-index: 0;
             background:
-                radial-gradient(ellipse at 20% 30%, rgba(60, 20, 120, 0.30) 0%, transparent 55%),
-                radial-gradient(ellipse at 80% 70%, rgba(20, 40, 140, 0.25) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(120, 20, 80, 0.12) 0%, transparent 60%),
-                var(--navy);
+                radial-gradient(ellipse at 20% 30%, rgba(255, 107, 203, 0.15) 0%, transparent 55%),
+                radial-gradient(ellipse at 80% 70%, rgba(212, 184, 255, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(255, 215, 0, 0.05) 0%, transparent 60%),
+                linear-gradient(180deg, #1a0a1e 0%, #2d1040 40%, #1f0a2e 100%);
             overflow: hidden;
             pointer-events: none;
         }
 
-        .star {
+        /* ===== CASTLE SILHOUETTE ===== */
+        .castle {
             position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle var(--dur, 3s) ease-in-out infinite alternate;
-            box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.25);
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            pointer-events: none;
+            opacity: 0.12;
         }
-        @keyframes twinkle {
+        .castle::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 5%;
+            width: 90%;
+            height: 100%;
+            background:
+                /* Main wall */
+                linear-gradient(180deg, transparent 30%, rgba(255, 215, 0, 0.06) 100%),
+                /* Towers */
+                radial-gradient(ellipse at 10% 100%, rgba(255, 215, 0, 0.08) 0%, transparent 30%),
+                radial-gradient(ellipse at 30% 100%, rgba(255, 215, 0, 0.06) 0%, transparent 25%),
+                radial-gradient(ellipse at 50% 100%, rgba(255, 215, 0, 0.08) 0%, transparent 30%),
+                radial-gradient(ellipse at 70% 100%, rgba(255, 215, 0, 0.06) 0%, transparent 25%),
+                radial-gradient(ellipse at 90% 100%, rgba(255, 215, 0, 0.08) 0%, transparent 30%);
+            filter: blur(2px);
+        }
+        .castle-towers {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            pointer-events: none;
+        }
+        .castle-towers::before {
+            content: '🏰';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12rem;
+            opacity: 0.10;
+            filter: blur(1px);
+        }
+
+        /* ===== FLOATING SPARKLES ===== */
+        .sparkle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.8), rgba(255, 107, 203, 0.3));
+            animation: float-sparkle var(--dur, 6s) ease-in-out infinite alternate;
+            box-shadow: 0 0 20px 4px var(--pink-glow);
+        }
+        @keyframes float-sparkle {
             0% {
-                opacity: 0.15;
-                transform: scale(0.7);
+                transform: translate(0, 0) scale(1) rotate(0deg);
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 1;
             }
             100% {
-                opacity: 1;
-                transform: scale(1.3);
+                transform: translate(30px, -40px) scale(1.4) rotate(180deg);
+                opacity: 0.4;
             }
         }
 
-        .shooting-star {
+        /* ===== FLOATING STARS ===== */
+        .star-particle {
             position: absolute;
             width: 3px;
             height: 3px;
             background: white;
             border-radius: 50%;
-            box-shadow: 0 0 14px 5px rgba(255, 255, 255, 0.5);
-            animation: shoot linear infinite;
-            opacity: 0;
+            animation: twinkle-star var(--dur, 3s) ease-in-out infinite alternate;
+            box-shadow: 0 0 12px 3px rgba(255, 215, 0, 0.3);
         }
-        .shooting-star::after {
+        @keyframes twinkle-star {
+            0% {
+                opacity: 0.1;
+                transform: scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+
+        /* ===== SHOOTING STAR ===== */
+        .shooting-star-magic {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: linear-gradient(to right, #ffd700, transparent);
+            border-radius: 50%;
+            animation: shoot-magic linear infinite;
+            opacity: 0;
+            box-shadow: 0 0 20px 6px rgba(255, 215, 0, 0.3);
+        }
+        .shooting-star-magic::after {
             content: '';
             position: absolute;
             top: 50%;
             right: 100%;
-            width: 70px;
-            height: 1.5px;
-            background: linear-gradient(to left, rgba(255, 255, 255, 0.5), transparent);
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(to left, rgba(255, 215, 0, 0.4), transparent);
             transform: translateY(-50%);
         }
-        @keyframes shoot {
+        @keyframes shoot-magic {
             0% {
-                transform: translate(0, 0) rotate(-35deg);
+                transform: translate(0, 0) rotate(-30deg);
                 opacity: 0;
             }
             5% {
                 opacity: 1;
             }
-            18% {
+            20% {
                 opacity: 1;
             }
-            22% {
+            25% {
                 opacity: 0;
-                transform: translate(-450px, 320px) rotate(-35deg);
+                transform: translate(-500px, 350px) rotate(-30deg);
             }
             100% {
                 opacity: 0;
             }
         }
 
-        .sun {
-            position: absolute;
-            bottom: 3%;
-            right: 2%;
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #fff7b0, #ffb800 50%, #ff6600);
-            box-shadow: 0 0 100px 50px rgba(255, 200, 0, 0.25), 0 0 200px 100px rgba(255, 150, 0, 0.10);
-            animation: pulse-sun 5s ease-in-out infinite;
-            pointer-events: none;
-        }
-        @keyframes pulse-sun {
-            0%,
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 100px 50px rgba(255, 200, 0, 0.25), 0 0 200px 100px rgba(255, 150, 0, 0.10);
-            }
-            50% {
-                transform: scale(1.06);
-                box-shadow: 0 0 130px 70px rgba(255, 200, 0, 0.35), 0 0 240px 130px rgba(255, 150, 0, 0.15);
-            }
-        }
-
-        .moon {
-            position: absolute;
-            top: 6%;
-            left: 3%;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 35% 30%, #f0ece0, #c8c0b0 50%, #a09888);
-            box-shadow: 0 0 70px 35px rgba(200, 180, 160, 0.12), inset -12px -12px 30px rgba(0, 0, 0, 0.3);
-            pointer-events: none;
-            animation: float-moon 7s ease-in-out infinite;
-        }
-        .moon::before {
-            content: '';
-            position: absolute;
-            top: 18%;
-            left: 22%;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: rgba(160, 150, 135, 0.35);
-            box-shadow:
-                30px 24px 0 6px rgba(160, 150, 135, 0.28),
-                -14px 44px 0 4px rgba(160, 150, 135, 0.22),
-                34px 54px 0 8px rgba(160, 150, 135, 0.18);
-        }
-        @keyframes float-moon {
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-14px);
-            }
-        }
-
-        .planet {
-            position: absolute;
-            border-radius: 50%;
-            pointer-events: none;
-        }
-        .planet-1 {
-            width: 32px;
-            height: 32px;
-            background: radial-gradient(circle at 30% 25%, #ff6bcb, #b02a7a);
-            top: 12%;
-            left: 22%;
-            box-shadow: 0 0 40px 15px rgba(255, 107, 203, 0.20);
-            animation: orbit1 22s linear infinite;
-        }
-        .planet-1::after {
-            content: '';
-            position: absolute;
-            top: 10%;
-            left: 60%;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: 12px 8px 0 2px rgba(255, 255, 255, 0.10);
-        }
-        .planet-2 {
-            width: 20px;
-            height: 20px;
-            background: radial-gradient(circle at 30% 30%, #ffd700, #b8860b);
-            bottom: 18%;
-            right: 15%;
-            box-shadow: 0 0 30px 12px rgba(255, 215, 0, 0.15);
-            animation: orbit2 26s linear infinite;
-        }
-        .planet-3 {
-            width: 24px;
-            height: 24px;
-            background: radial-gradient(circle at 25% 20%, #ff4da6, #a02070);
-            top: 48%;
-            left: 58%;
-            box-shadow: 0 0 30px 12px rgba(255, 45, 149, 0.15);
-            animation: orbit3 18s linear infinite;
-        }
-
-        @keyframes orbit1 {
-            0% {
-                transform: rotate(0deg) translateX(140px) rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg) translateX(140px) rotate(-360deg);
-            }
-        }
-        @keyframes orbit2 {
-            0% {
-                transform: rotate(0deg) translateX(90px) rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg) translateX(90px) rotate(-360deg);
-            }
-        }
-        @keyframes orbit3 {
-            0% {
-                transform: rotate(0deg) translateX(110px) rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg) translateX(110px) rotate(-360deg);
-            }
-        }
-
-        .galaxy {
-            position: absolute;
-            top: 28%;
-            left: 55%;
-            width: 460px;
-            height: 460px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 40% 40%, rgba(255, 45, 149, 0.07), rgba(19, 27, 68, 0.4) 60%, transparent 75%);
-            filter: blur(50px);
-            pointer-events: none;
-            animation: swirl 30s linear infinite;
-        }
-        @keyframes swirl {
-            0% {
-                transform: rotate(0deg) scale(1);
-            }
-            50% {
-                transform: rotate(180deg) scale(1.05);
-            }
-            100% {
-                transform: rotate(360deg) scale(1);
-            }
-        }
-
-        /* ========== LAYOUT ========== */
+        /* ===== LAYOUT ===== */
         .app-wrapper {
             position: relative;
             z-index: 1;
@@ -279,6 +200,7 @@
             padding: 20px 18px 40px;
         }
 
+        /* ===== HEADER ===== */
         .header {
             display: flex;
             flex-wrap: wrap;
@@ -286,12 +208,23 @@
             justify-content: space-between;
             padding: 18px 24px;
             margin-bottom: 8px;
-            background: rgba(11, 15, 42, 0.65);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: var(--radius);
             border: 1px solid rgba(255, 215, 0, 0.12);
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 40px rgba(255, 107, 203, 0.08), inset 0 0 60px rgba(255, 215, 0, 0.02);
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '✨👑✨';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 4rem;
+            opacity: 0.05;
+            pointer-events: none;
         }
         .header-left {
             display: flex;
@@ -304,17 +237,40 @@
             gap: 14px;
         }
         .header-left .top-row .icon {
-            font-size: 2rem;
-            filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.3));
+            font-size: 2.2rem;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.2));
+            animation: float-crown 3s ease-in-out infinite;
+        }
+        @keyframes float-crown {
+            0%,
+            100% {
+                transform: translateY(0px) rotate(-2deg);
+            }
+            50% {
+                transform: translateY(-6px) rotate(2deg);
+            }
         }
         .header-left .top-row h1 {
             font-size: 1.8rem;
             font-weight: 800;
             letter-spacing: 2px;
-            background: linear-gradient(135deg, var(--gold-light), var(--pink-light));
+            background: linear-gradient(135deg, #ffd700, #ff6bcb, #d4b8ff, #ffd700);
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: shimmer-text 4s ease-in-out infinite;
+        }
+        @keyframes shimmer-text {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
         }
         .header-left .credit {
             font-size: 0.8rem;
@@ -323,8 +279,9 @@
             letter-spacing: 0.5px;
         }
         .header-left .credit span {
-            color: var(--pink-light);
-            font-weight: 500;
+            color: var(--pink);
+            font-weight: 600;
+            text-shadow: 0 0 20px rgba(255, 107, 203, 0.2);
         }
         .header-right {
             display: flex;
@@ -335,18 +292,20 @@
         .header-right .badge {
             padding: 6px 18px;
             border-radius: 40px;
-            background: rgba(255, 45, 149, 0.15);
-            border: 1px solid rgba(255, 45, 149, 0.25);
+            background: rgba(255, 107, 203, 0.12);
+            border: 1px solid rgba(255, 107, 203, 0.2);
             font-size: 0.85rem;
-            color: var(--pink-light);
+            color: var(--pink);
             font-weight: 500;
             backdrop-filter: blur(4px);
+            box-shadow: 0 0 20px rgba(255, 107, 203, 0.05);
         }
         .header-right .badge strong {
             color: var(--gold);
             font-weight: 700;
         }
 
+        /* ===== STATS ===== */
         .stats-row {
             display: flex;
             flex-wrap: wrap;
@@ -373,21 +332,24 @@
         }
         .stats-row .stat .num.gold {
             color: var(--gold);
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
         }
         .stats-row .stat .num.pink {
-            color: var(--pink-light);
+            color: var(--pink);
+            text-shadow: 0 0 20px rgba(255, 107, 203, 0.2);
         }
 
+        /* ===== GRID ===== */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 18px;
         }
 
-        /* ========== CARD ========== */
+        /* ===== CARD ===== */
         .card {
             position: relative;
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.04);
             border-radius: var(--radius);
             padding: 18px 16px 16px;
             border: 1px solid rgba(255, 255, 255, 0.04);
@@ -396,20 +358,28 @@
             min-height: 110px;
             display: flex;
             flex-direction: column;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius);
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.02), rgba(255, 107, 203, 0.02));
+            pointer-events: none;
         }
 
+        /* --- NOT ADDED --- */
         .card:not(.added) {
-            filter: blur(3px) brightness(0.55) saturate(0.4);
-            opacity: 0.7;
-            pointer-events: auto;
-            border-color: rgba(255, 255, 255, 0.03);
-            transition: var(--transition);
+            filter: blur(2px) brightness(0.5) saturate(0.3);
+            opacity: 0.5;
+            border-color: rgba(255, 255, 255, 0.02);
         }
         .card:not(.added):hover {
-            filter: blur(3px) brightness(0.65) saturate(0.5);
-            opacity: 0.85;
+            filter: blur(2px) brightness(0.6) saturate(0.4);
+            opacity: 0.7;
             transform: scale(1.01);
         }
         .card:not(.added) .card-number {
@@ -419,53 +389,80 @@
             color: var(--text-muted);
         }
         .card:not(.added) .card-preview {
-            color: rgba(136, 146, 176, 0.3);
+            color: rgba(136, 146, 176, 0.2);
         }
         .card:not(.added) .card-status {
-            color: rgba(136, 146, 176, 0.25);
+            color: rgba(136, 146, 176, 0.2);
         }
 
+        /* --- ADDED: MAGICAL GLOW --- */
         .card.added {
-            border-color: rgba(255, 215, 0, 0.25);
-            background: rgba(255, 215, 0, 0.04);
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.06), inset 0 0 30px rgba(255, 45, 149, 0.03);
-            animation: glow-pulse 3s ease-in-out infinite alternate;
-            transform: translateY(0);
+            border-color: rgba(255, 215, 0, 0.2);
+            background: rgba(255, 215, 0, 0.03);
+            box-shadow:
+                0 0 30px rgba(255, 215, 0, 0.04),
+                0 0 60px rgba(255, 107, 203, 0.02),
+                inset 0 0 60px rgba(255, 215, 0, 0.02);
+            animation: card-glow-magic 3s ease-in-out infinite alternate;
         }
-        .card.added:hover {
-            transform: translateY(-4px) scale(1.01);
-            border-color: rgba(255, 215, 0, 0.5);
-            box-shadow: 0 8px 40px rgba(255, 215, 0, 0.12), 0 0 60px rgba(255, 45, 149, 0.06), inset 0 0 40px rgba(255, 215, 0, 0.04);
+        .card.added::after {
+            content: '✨';
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            font-size: 1.2rem;
+            animation: sparkle-spin 4s linear infinite;
+            opacity: 0.3;
         }
-
-        @keyframes glow-pulse {
+        @keyframes sparkle-spin {
             0% {
-                box-shadow: 0 0 20px rgba(255, 215, 0, 0.05), 0 0 40px rgba(255, 45, 149, 0.02);
-                border-color: rgba(255, 215, 0, 0.20);
+                transform: rotate(0deg) scale(1);
+            }
+            50% {
+                transform: rotate(180deg) scale(1.2);
             }
             100% {
-                box-shadow: 0 0 40px rgba(255, 215, 0, 0.15), 0 0 80px rgba(255, 45, 149, 0.06);
-                border-color: rgba(255, 215, 0, 0.45);
+                transform: rotate(360deg) scale(1);
+            }
+        }
+        .card.added:hover {
+            transform: translateY(-6px) scale(1.01);
+            border-color: rgba(255, 215, 0, 0.4);
+            box-shadow:
+                0 8px 50px rgba(255, 215, 0, 0.08),
+                0 0 80px rgba(255, 107, 203, 0.04),
+                inset 0 0 40px rgba(255, 215, 0, 0.03);
+        }
+
+        @keyframes card-glow-magic {
+            0% {
+                box-shadow: 0 0 20px rgba(255, 215, 0, 0.02), 0 0 40px rgba(255, 107, 203, 0.01);
+                border-color: rgba(255, 215, 0, 0.15);
+            }
+            100% {
+                box-shadow: 0 0 50px rgba(255, 215, 0, 0.08), 0 0 100px rgba(255, 107, 203, 0.04);
+                border-color: rgba(255, 215, 0, 0.35);
             }
         }
 
         .card.added .card-number {
             color: var(--gold);
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
         }
         .card.added .card-title {
             color: var(--text-white);
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.08);
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
         }
         .card.added .card-preview {
-            color: var(--pink-light);
-            text-shadow: 0 0 20px rgba(255, 45, 149, 0.15);
+            color: var(--pink);
+            text-shadow: 0 0 20px rgba(255, 107, 203, 0.15);
         }
         .card.added .card-status {
             color: var(--gold-light);
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
         }
 
+        /* Card inner elements */
         .card-number {
             font-size: 0.7rem;
             font-weight: 600;
@@ -490,7 +487,7 @@
         .card-preview {
             font-size: 0.8rem;
             color: var(--text-muted);
-            opacity: 0.7;
+            opacity: 0.6;
             transition: var(--transition);
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -519,18 +516,21 @@
         }
         .card.added .card-status .dot {
             background: var(--pink);
-            box-shadow: 0 0 16px rgba(255, 45, 149, 0.6);
-            animation: dot-glow 1.8s ease-in-out infinite alternate;
+            box-shadow: 0 0 20px rgba(255, 107, 203, 0.6);
+            animation: dot-pulse 1.8s ease-in-out infinite alternate;
         }
-        @keyframes dot-glow {
+        @keyframes dot-pulse {
             0% {
-                box-shadow: 0 0 8px rgba(255, 45, 149, 0.3);
+                box-shadow: 0 0 8px rgba(255, 107, 203, 0.3);
+                transform: scale(1);
             }
             100% {
-                box-shadow: 0 0 24px rgba(255, 45, 149, 0.8);
+                box-shadow: 0 0 30px rgba(255, 107, 203, 0.8);
+                transform: scale(1.3);
             }
         }
 
+        /* 404 overlay */
         .card:not(.added) .card-404 {
             display: flex;
         }
@@ -539,9 +539,9 @@
             position: absolute;
             inset: 0;
             border-radius: var(--radius);
-            background: rgba(11, 15, 42, 0.85);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: rgba(26, 10, 30, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -563,16 +563,16 @@
         .card-404 .big {
             font-size: 2.4rem;
             line-height: 1;
-            color: var(--pink-light);
-            text-shadow: 0 0 30px rgba(255, 45, 149, 0.2);
+            color: var(--pink);
+            text-shadow: 0 0 30px rgba(255, 107, 203, 0.2);
         }
         .card-404 .sub {
             font-size: 0.7rem;
-            opacity: 0.5;
+            opacity: 0.4;
             margin-top: 2px;
         }
 
-        /* ========== RESPONSIVE ========== */
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 700px) {
             .header {
                 padding: 14px 16px;
@@ -584,7 +584,7 @@
                 font-size: 1.3rem;
             }
             .header-left .top-row .icon {
-                font-size: 1.5rem;
+                font-size: 1.6rem;
             }
             .header-left .credit {
                 font-size: 0.7rem;
@@ -622,44 +622,8 @@
             .card-404 .big {
                 font-size: 1.8rem;
             }
-            .sun {
-                width: 80px;
-                height: 80px;
-                bottom: 1%;
-                right: 1%;
-            }
-            .moon {
-                width: 60px;
-                height: 60px;
-                top: 2%;
-                left: 2%;
-            }
-            .planet-1 {
-                width: 20px;
-                height: 20px;
-                top: 8%;
-                left: 18%;
-            }
-            .planet-2 {
-                width: 14px;
-                height: 14px;
-                bottom: 12%;
-                right: 10%;
-            }
-            .planet-3 {
-                width: 16px;
-                height: 16px;
-                top: 44%;
-                left: 50%;
-            }
-            .galaxy {
-                width: 200px;
-                height: 200px;
-                top: 40%;
-                left: 50%;
-            }
-            .shooting-star {
-                display: none;
+            .castle-towers::before {
+                font-size: 6rem;
             }
         }
 
@@ -687,23 +651,22 @@
             }
         }
 
-        /* ========== SCROLLBAR ========== */
+        /* ===== SCROLLBAR ===== */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: var(--navy);
+            background: #1a0a1e;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(255, 215, 0, 0.25);
+            background: rgba(255, 215, 0, 0.2);
             border-radius: 8px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 215, 0, 0.4);
+            background: rgba(255, 215, 0, 0.35);
         }
 
-        /* Selection */
         ::selection {
             background: var(--pink);
             color: white;
@@ -712,14 +675,12 @@
 </head>
 <body>
 
-    <!-- ===== SPACE BG ===== -->
-    <div id="space-bg" aria-hidden="true">
-        <div class="sun"></div>
-        <div class="moon"></div>
-        <div class="planet planet-1"></div>
-        <div class="planet planet-2"></div>
-        <div class="planet planet-3"></div>
-        <div class="galaxy"></div>
+    <!-- ===== MAGICAL BACKGROUND ===== -->
+    <div id="magic-bg" aria-hidden="true">
+        <!-- Castle -->
+        <div class="castle"></div>
+        <div class="castle-towers"></div>
+        <!-- Sparkles & stars generated by JS -->
     </div>
 
     <!-- ===== APP ===== -->
@@ -728,7 +689,7 @@
         <header class="header">
             <div class="header-left">
                 <div class="top-row">
-                    <span class="icon">📖</span>
+                    <span class="icon">👑</span>
                     <h1>ELS BOOK</h1>
                 </div>
                 <div class="credit">✨ done by <span>nappicoo</span> with love 💕</div>
@@ -752,13 +713,11 @@
     <script>
         // ============================================================
         //  ✨ ONE‑TIME SETUP: List the IDs of texts you have created.
-        //  Example: if you have text1.html and text3.html, write [1, 3].
-        //  Then save and refresh — those cards will glow!
         // ============================================================
-        const ADDED_TEXTS = [1, 2];   // <-- ✨ CHANGE THIS LINE ✨
+        const ADDED_TEXTS = [1, 2];   // <-- Add more numbers as you create new texts
 
         // ============================================================
-        //  DATA — all 200 slots are empty by default
+        //  DATA — all 200 slots
         // ============================================================
         const entries = [];
 
@@ -768,7 +727,7 @@
             entries.push({
                 id: id,
                 title: isAdded ? `Text ${id}` : `Text ${id}`,
-                preview: isAdded ? 'click to open' : 'coming soon...',
+                preview: isAdded ? '✨ click to open' : 'coming soon...',
                 added: isAdded,
             });
         }
@@ -826,7 +785,6 @@
                 card.appendChild(preview);
                 card.appendChild(status);
 
-                // Click: if added, open textX.html; else show 404 overlay
                 card.addEventListener('click', function(e) {
                     if (!entry.added) {
                         const overlay = this.querySelector('.card-404');
@@ -854,42 +812,55 @@
         render();
 
         // ============================================================
-        //  STARS & SHOOTING STARS (cosmic background)
+        //  MAGICAL PARTICLES
         // ============================================================
-        function createStars() {
-            const bg = document.getElementById('space-bg');
-            const count = 180;
-            for (let i = 0; i < count; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                const size = 1.5 + Math.random() * 3;
-                star.style.width = size + 'px';
-                star.style.height = size + 'px';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.setProperty('--dur', (2 + Math.random() * 4) + 's');
-                star.style.animationDelay = (Math.random() * 5) + 's';
-                bg.appendChild(star);
-            }
-        }
+        function createMagic() {
+            const bg = document.getElementById('magic-bg');
 
-        function createShootingStars() {
-            const bg = document.getElementById('space-bg');
-            for (let i = 0; i < 4; i++) {
+            // Sparkles
+            for (let i = 0; i < 25; i++) {
+                const sp = document.createElement('div');
+                sp.className = 'sparkle';
+                const size = 3 + Math.random() * 8;
+                sp.style.width = size + 'px';
+                sp.style.height = size + 'px';
+                sp.style.left = Math.random() * 100 + '%';
+                sp.style.top = Math.random() * 100 + '%';
+                sp.style.setProperty('--dur', (4 + Math.random() * 8) + 's');
+                sp.style.animationDelay = (Math.random() * 6) + 's';
+                const colors = ['#ffd700', '#ff6bcb', '#d4b8ff', '#ff9ecb', '#fff0b3'];
+                sp.style.background = `radial-gradient(circle, ${colors[Math.floor(Math.random() * colors.length)]}, transparent)`;
+                sp.style.boxShadow = `0 0 ${20 + Math.random() * 30}px ${3 + Math.random() * 8}px rgba(255,215,0,0.1)`;
+                bg.appendChild(sp);
+            }
+
+            // Stars
+            for (let i = 0; i < 120; i++) {
+                const st = document.createElement('div');
+                st.className = 'star-particle';
+                const size = 1 + Math.random() * 3;
+                st.style.width = size + 'px';
+                st.style.height = size + 'px';
+                st.style.left = Math.random() * 100 + '%';
+                st.style.top = Math.random() * 100 + '%';
+                st.style.setProperty('--dur', (2 + Math.random() * 5) + 's');
+                st.style.animationDelay = (Math.random() * 5) + 's';
+                bg.appendChild(st);
+            }
+
+            // Shooting stars
+            for (let i = 0; i < 5; i++) {
                 const ss = document.createElement('div');
-                ss.className = 'shooting-star';
+                ss.className = 'shooting-star-magic';
                 ss.style.left = (10 + Math.random() * 70) + '%';
                 ss.style.top = (5 + Math.random() * 40) + '%';
-                ss.style.animationDuration = (6 + Math.random() * 10) + 's';
-                ss.style.animationDelay = (Math.random() * 20) + 's';
-                ss.style.width = (2 + Math.random() * 3) + 'px';
-                ss.style.height = ss.style.width;
+                ss.style.animationDuration = (8 + Math.random() * 12) + 's';
+                ss.style.animationDelay = (Math.random() * 25) + 's';
                 bg.appendChild(ss);
             }
         }
 
-        createStars();
-        createShootingStars();
+        createMagic();
 
         // ============================================================
         //  CONSOLE HELPER (optional)
@@ -898,7 +869,7 @@
             const idx = id - 1;
             if (idx >= 0 && idx < entries.length) {
                 entries[idx].title = title || `Text ${id}`;
-                entries[idx].preview = preview || 'click to open';
+                entries[idx].preview = preview || '✨ click to open';
                 entries[idx].added = true;
                 render();
                 console.log(`✅ Added text #${id}: "${entries[idx].title}"`);
@@ -910,10 +881,10 @@
 
         window.__entries = entries;
 
-        console.log('🌌 ELS BOOK ready!');
+        console.log('👑 ELS BOOK · Fairy Princess Castle ready!');
         console.log('📖 To add texts, edit the ADDED_TEXTS array at the top of this file.');
         console.log('💕 done by nappicoo with love');
     </script>
 
 </body>
-  </html>
+</html>
