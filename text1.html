@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>ELS BOOK · Quiz 1 · Vocab</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #0b0f2a;
+            --navy-light: #131b44;
+            --pink: #ff2d95;
+            --pink-light: #ff6bcb;
+            --gold: #ffd700;
+            --gold-light: #ffed4a;
+            --text-white: #f0eef8;
+            --text-muted: #8892b0;
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --radius: 20px;
+            --transition: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Quicksand', system-ui, -apple-system, sans-serif;
+            background: var(--navy);
+            color: var(--text-white);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        #space-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse at 20% 30%, rgba(60, 20, 120, 0.30) 0%, transparent 55%),
+                radial-gradient(ellipse at 80% 70%, rgba(20, 40, 140, 0.25) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(120, 20, 80, 0.12) 0%, transparent 60%),
+                var(--navy);
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        /* Stars & planets – same as before, but I'll keep it short */
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--dur, 3s) ease-in-out infinite alternate;
+            box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.25);
+        }
+        @keyframes twinkle {
+            0% {
+                opacity: 0.15;
+                transform: scale(0.7);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.3);
+            }
+        }
+
+        .shooting-star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 14px 5px rgba(255, 255, 255, 0.5);
+            animation: shoot linear infinite;
+            opacity: 0;
+        }
+        .shooting-star::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 100%;
+            width: 70px;
+            height: 1.5px;
+            background: linear-gradient(to left, rgba(255, 255, 255, 0.5), transparent);
+            transform: translateY(-50%);
+        }
+        @keyframes shoot {
+            0% {
+                transform: translate(0, 0) rotate(-35deg);
+                opacity: 0;
+            }
+            5% {
+                opacity: 1;
+            }
+            18% {
+                opacity: 1;
+            }
+            22% {
+                opacity: 0;
+                transform: translate(-450px, 320px) rotate(-35deg);
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .sun {
+            position: absolute;
+            bottom: 3%;
+            right: 2%;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #fff7b0, #ffb800 50%, #ff6600);
+            box-shadow: 0 0 100px 50px rgba(255, 200, 0, 0.25), 0 0 200px 100px rgba(255, 150, 0, 0.10);
+            animation: pulse-sun 5s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes pulse-sun {
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 100px 50px rgba(255, 200, 0, 0.25), 0 0 200px 100px rgba(255, 150, 0, 0.10);
+            }
+            50% {
+                transform: scale(1.06);
+                box-shadow: 0 0 130px 70px rgba(255, 200, 0, 0.35), 0 0 240px 130px rgba(255, 150, 0, 0.15);
+            }
+        }
+
+        .moon {
+            position: absolute;
+            top: 6%;
+            left: 3%;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, #f0ece0, #c8c0b0 50%, #a09888);
+            box-shadow: 0 0 70px 35px rgba(200, 180, 160, 0.12), inset -12px -12px 30px rgba(0, 0, 0, 0.3);
+            pointer-events: none;
+            animation: float-moon 7s ease-in-out infinite;
+        }
+        @keyframes float-moon {
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-14px);
+            }
+        }
+
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .planet-1 {
+            width: 32px;
+            height: 32px;
+            background: radial-gradient(circle at 30% 25%, #ff6bcb, #b02a7a);
+            top: 12%;
+            left: 22%;
+            box-shadow: 0 0 40px 15px rgba(255, 107, 203, 0.20);
+            animation: orbit1 22s linear infinite;
+        }
+        .planet-2 {
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle at 30% 30%, #ffd700, #b8860b);
+            bottom: 18%;
+            right: 15%;
+            box-shadow: 0 0 30px 12px rgba(255, 215, 0, 0.15);
+            animation: orbit2 26s linear infinite;
+        }
+        .planet-3 {
+            width: 24px;
+            height: 24px;
+            background: radial-gradient(circle at 25% 20%, #ff4da6, #a02070);
+            top: 48%;
+            left: 58%;
+            box-shadow: 0 0 30px 12px rgba(255, 45, 149, 0.15);
+            animation: orbit3 18s linear infinite;
+        }
+        @keyframes orbit1 {
+            0% {
+                transform: rotate(0deg) translateX(140px) rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg) translateX(140px) rotate(-360deg);
+            }
+        }
+        @keyframes orbit2 {
+            0% {
+                transform: rotate(0deg) translateX(90px) rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg) translateX(90px) rotate(-360deg);
+            }
+        }
+        @keyframes orbit3 {
+            0% {
+                transform: rotate(0deg) translateX(110px) rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg) translateX(110px) rotate(-360deg);
+            }
+        }
+
+        .galaxy {
+            position: absolute;
+            top: 28%;
+            left: 55%;
+            width: 460px;
+            height: 460px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 40%, rgba(255, 45, 149, 0.07), rgba(19, 27, 68, 0.4) 60%, transparent 75%);
+            filter: blur(50px);
+            pointer-events: none;
+            animation: swirl 30s linear infinite;
+        }
+        @keyframes swirl {
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+            50% {
+                transform: rotate(180deg) scale(1.05);
+            }
+            100% {
+                transform: rotate(360deg) scale(1);
+            }
+        }
+
+        /* ===== APP LAYOUT ===== */
+        .app-wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 18px 40px;
+        }
+
+        /* HEADER */
+        .header {
+            text-align: center;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            background: rgba(11, 15, 42, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 215, 0, 0.12);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+        }
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--gold-light), var(--pink-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header .sub {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        .header .sub span {
+            color: var(--pink-light);
+            font-weight: 500;
+        }
+
+        /* QUOTE */
+        .quote-box {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--gold);
+            padding: 12px 18px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            backdrop-filter: blur(4px);
+            transition: var(--transition);
+        }
+        .quote-box .q-text {
+            color: var(--text-white);
+            font-weight: 300;
+            margin-right: 6px;
+        }
+
+        /* TOGGLE TEXT */
+        .toggle-wrapper {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: var(--radius);
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 215, 0, 0.08);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            color: var(--gold-light);
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+        }
+        .toggle-btn:hover {
+            background: rgba(255, 215, 0, 0.15);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.05);
+            transform: scale(1.02);
+        }
+        .toggle-btn.active {
+            background: rgba(255, 45, 149, 0.15);
+            border-color: var(--pink);
+            color: var(--pink-light);
+        }
+        .passage-content {
+            display: none;
+            margin-top: 14px;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .passage-content.open {
+            display: block;
+        }
+        .passage-content p {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+        .passage-content .translation {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 12px;
+            margin-top: 12px;
+        }
+        .passage-content .translation strong {
+            color: var(--pink-light);
+        }
+
+        /* QUIZ AREA */
+        .quiz-area {
+            background: rgba(11, 15, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 24px 20px;
+            margin-top: 10px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .quiz-area::before {
+            content: '✨';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 4rem;
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        /* QUIZ TYPE SELECTOR */
+        .quiz-type-selector {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .quiz-type-btn {
+            padding: 8px 20px;
+            border-radius: 40px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            backdrop-filter: blur(4px);
+        }
+        .quiz-type-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold-light);
+            transform: scale(1.02);
+        }
+        .quiz-type-btn.active {
+            background: linear-gradient(135deg, var(--pink), var(--gold));
+            color: var(--navy);
+            border-color: transparent;
+            box-shadow: 0 0 30px rgba(255, 45, 149, 0.2);
+        }
+
+        /* STATS */
+        .progress-stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 8px 12px;
+            margin-bottom: 16px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .progress-stats .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 4px 12px;
+            border-radius: 30px;
+        }
+        .progress-stats .stat-item .num {
+            color: var(--text-white);
+            font-weight: 600;
+        }
+        .progress-stats .stat-item .num.gold {
+            color: var(--gold);
+        }
+        .progress-stats .stat-item .num.pink {
+            color: var(--pink-light);
+        }
+        .progress-stats .stat-item .num.green {
+            color: #4ade80;
+        }
+        .progress-stats .stat-item .num.red {
+            color: #f87171;
+        }
+
+        .progress-bar-wrap {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--pink), var(--gold));
+            border-radius: 12px;
+            transition: width 0.5s ease;
+        }
+
+        /* QUESTION */
+        .question-block {
+            margin-bottom: 20px;
+        }
+        .question-number {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 14px;
+            color: var(--text-white);
+        }
+
+        /* OPTIONS (MCQ) */
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+        .option-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: scale(1.01);
+        }
+        .option-item .letter {
+            font-weight: 600;
+            color: var(--text-muted);
+            min-width: 24px;
+        }
+        .option-item.selected {
+            border-color: var(--gold);
+            background: rgba(255, 215, 0, 0.06);
+        }
+        .option-item.correct {
+            border-color: #4ade80;
+            background: rgba(74, 222, 128, 0.10);
+        }
+        .option-item.wrong {
+            border-color: #f87171;
+            background: rgba(248, 113, 113, 0.10);
+        }
+        .option-item.disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        .option-item .check-mark {
+            margin-left: auto;
+            font-size: 1.2rem;
+        }
+
+        /* FILL-IN */
+        .fill-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+        .fill-group input {
+            flex: 1;
+            min-width: 180px;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            color: var(--text-white);
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+        }
+        .fill-group input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.05);
+        }
+        .fill-group input:disabled {
+            opacity: 0.5;
+        }
+        .fill-group .check-btn {
+            padding: 10px 24px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--navy);
+            border: none;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+        }
+        .fill-group .check-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.3);
+        }
+        .fill-group .check-btn:disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        .fill-feedback {
+            margin-top: 10px;
+            font-size: 0.95rem;
+            padding: 8px 12px;
+            border-radius: 12px;
+        }
+        .fill-feedback.correct {
+            color: #4ade80;
+            background: rgba(74, 222, 128, 0.05);
+        }
+        .fill-feedback.wrong {
+            color: #f87171;
+            background: rgba(248, 113, 113, 0.05);
+        }
+
+        /* BUTTONS */
+        .action-btn {
+            display: inline-block;
+            padding: 14px 40px;
+            border: none;
+            border-radius: 60px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        .action-btn.start {
+            background: linear-gradient(135deg, var(--pink), var(--gold));
+            color: var(--navy);
+            box-shadow: 0 0 40px rgba(255, 45, 149, 0.2);
+        }
+        .action-btn.start:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 60px rgba(255, 45, 149, 0.4);
+        }
+        .action-btn.start::after {
+            content: '✨';
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+        .action-btn.restart {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-white);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 16px;
+        }
+        .action-btn.restart:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: scale(1.02);
+        }
+        .btn-wrapper {
+            text-align: center;
+            margin: 20px 0 10px;
+        }
+
+        .mistakes-summary {
+            margin-top: 20px;
+            padding: 16px;
+            background: rgba(248, 113, 113, 0.05);
+            border: 1px solid rgba(248, 113, 113, 0.2);
+            border-radius: var(--radius);
+        }
+        .mistakes-summary h3 {
+            color: #f87171;
+            margin-bottom: 10px;
+        }
+        .mistake-item {
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            font-size: 0.9rem;
+        }
+        .mistake-item .wrong-answer {
+            color: #f87171;
+        }
+        .mistake-item .correct-answer {
+            color: #4ade80;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            .quiz-area {
+                padding: 16px 14px;
+            }
+            .option-item {
+                font-size: 0.85rem;
+                padding: 8px 12px;
+            }
+            .fill-group input {
+                min-width: 120px;
+                font-size: 0.9rem;
+            }
+            .action-btn {
+                padding: 12px 28px;
+                font-size: 0.95rem;
+            }
+            .progress-stats {
+                font-size: 0.75rem;
+            }
+            .question-text {
+                font-size: 1rem;
+            }
+            .quiz-type-btn {
+                font-size: 0.8rem;
+                padding: 6px 14px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .header h1 {
+                font-size: 1.2rem;
+            }
+            .fill-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .fill-group .check-btn {
+                width: 100%;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--navy);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 215, 0, 0.25);
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 215, 0, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div id="space-bg" aria-hidden="true">
+        <div class="sun"></div>
+        <div class="moon"></div>
+        <div class="planet planet-1"></div>
+        <div class="planet planet-2"></div>
+        <div class="planet planet-3"></div>
+        <div class="galaxy"></div>
+    </div>
+
+    <div class="app-wrapper">
+        <!-- HEADER -->
+        <header class="header">
+            <h1>📖 ELS BOOK · Quiz 1</h1>
+            <div class="sub">✨ done by <span>nappicoo</span> with love 💕</div>
+        </header>
+
+        <!-- QUOTE -->
+        <div class="quote-box" id="quoteBox">
+            <span class="q-text">“</span><span id="quoteText">Knowledge is power.</span><span class="q-text">”</span>
+        </div>
+
+        <!-- TOGGLE TEXT -->
+        <div class="toggle-wrapper">
+            <button class="toggle-btn" id="toggleTextBtn">📖 Read full text</button>
+            <div class="passage-content" id="passageContent">
+                <p><strong>THE BEST RECRUITING AGENTS</strong></p>
+                <p>In 1849 a servant girl wrote home to her brother from Port Adelaide, South Australia: "I have accepted a situation at £20 per annum, so you can tell the servants in your neighbourhood not to stay in England for such wages as from £4 to £8 a year, but come here." Letters such as these, which were circulated from kitchen to kitchen and from attic to attic in English homes, were the best recruiting agents for the colonies, which were then so desperately in need of young women to serve the pioneers who were trying to create a new life for themselves in their chosen countries. Other girls read about the much better prospects overseas in newspapers and magazines, which also published advertisements giving details of free or assisted passages.</p>
+                <div class="translation">
+                    <strong>🇺🇿 O‘zbekcha tarjimasi:</strong><br>
+                    1849-yilda Port Adelaidada (Janubiy Avstraliya) bir xizmatkor qiz akasiga xat yozib, u yerda yiliga 20 funt sterling maosh bilan ish topganini, Angliyadagi xizmatkorlarga yiliga 4-8 funt sterling maosh evaziga Angliyada qolmasliklarini, balki u yerga kelishlarini aytibdi. Bunday xatlar ingliz uylarida oshxonadan oshxonaga va chordoqdan chordoqqa tarqalib, yangi hayot qurishga intilayotgan ko‘chmanchilarga xizmat qilish uchun yosh ayollarga juda muhtoj bo‘lgan koloniyalar uchun eng yaxshi ishga yollovchi agentlar bo‘lgan. Boshqa qizlar esa gazeta va jurnallarda chet eldagi ancha yaxshi istiqbollar haqida o‘qiganlar, ular bepul yoki yordam ko‘rsatilgan safar tafsilotlari bilan reklamalarni ham nashr etishgan.
+                </div>
+            </div>
+        </div>
+
+        <!-- QUIZ AREA -->
+        <div class="quiz-area" id="quizArea">
+            <!-- Quiz Type Selector -->
+            <div class="quiz-type-selector" id="quizTypeSelector">
+                <button class="quiz-type-btn active" data-type="main">📖 Main Quiz</button>
+                <button class="quiz-type-btn" data-type="vocab">📝 Vocabulary</button>
+            </div>
+
+            <!-- Stats -->
+            <div id="statsContainer" class="hidden">
+                <div class="progress-stats">
+                    <span class="stat-item">✅ Correct: <span class="num green" id="correctCount">0</span></span>
+                    <span class="stat-item">❌ Wrong: <span class="num red" id="wrongCount">0</span></span>
+                    <span class="stat-item">⏳ Remaining: <span class="num" id="remainingCount">0</span></span>
+                    <span class="stat-item">🎯 Accuracy: <span class="num gold" id="accuracyDisplay">0%</span></span>
+                </div>
+                <div class="progress-bar-wrap">
+                    <div class="progress-bar-fill" id="progressFill"></div>
+                </div>
+                <div style="text-align:right; font-size:0.75rem; color:var(--text-muted); margin-bottom:12px;">
+                    <span id="progressLabel">0 / 0</span>
+                </div>
+            </div>
+
+            <!-- Question Container -->
+            <div id="questionContainer">
+                <div class="btn-wrapper" id="startBtnWrapper">
+                    <button class="action-btn start" id="startBtn">✨ Start Quiz</button>
+                </div>
+                <div id="questionDisplay" class="hidden"></div>
+                <div id="finishDisplay" class="hidden"></div>
+            </div>
+
+            <div class="btn-wrapper" id="restartBtnWrapper">
+                <button class="action-btn restart" id="restartBtn">🔄 Restart Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        //  DATA
+        // ============================================================
+        const PASSAGE_EN = `In 1849 a servant girl wrote home to her brother from Port Adelaide, South Australia: "I have accepted a situation at £20 per annum, so you can tell the servants in your neighbourhood not to stay in England for such wages as from £4 to £8 a year, but come here." Letters such as these, which were circulated from kitchen to kitchen and from attic to attic in English homes, were the best recruiting agents for the colonies, which were then so desperately in need of young women to serve the pioneers who were trying to create a new life for themselves in their chosen countries. Other girls read about the much better prospects overseas in newspapers and magazines, which also published advertisements giving details of free or assisted passages.`;
+
+        // MAIN QUIZ (Exercises 2 & 3)
+        const MAIN_QUESTIONS = [
+            // Ex.2 MCQ
+            {
+                type: 'mcq',
+                question: '1. Those women who went to the colonies as servants......',
+                options: [
+                    'A) were all recruited through agents back in England',
+                    'B) missed their families greatly',
+                    'C) played the most important role in attracting others',
+                    'D) found themselves being moved from kitchen to kitchen',
+                    'E) had the pioneering spirit necessary for starting new lives'
+                ],
+                correct: 'D'
+            },
+            {
+                type: 'mcq',
+                question: '2. Getting to the colonies from England for the servants......',
+                options: [
+                    'A) could cost as little as £4',
+                    'B) was essential if they wanted to escape life in English attics',
+                    'C) was only possible if an agent had recruited them',
+                    'D) did not pose any financial problem',
+                    'E) required a written invitation from someone already there'
+                ],
+                correct: 'C'
+            },
+            {
+                type: 'mcq',
+                question: '3. It is stated in the passage that......',
+                options: [
+                    'A) no men could get jobs as servants in Australia',
+                    'B) servants were in great demand for the pioneers establishing new lives',
+                    'C) English homes were short of servants as so many went overseas',
+                    'D) the pioneers who went to the colonies were all men',
+                    'E) emigration from England to Australia started in 1849'
+                ],
+                correct: 'B'
+            },
+            // Ex.3 fill
+            {
+                type: 'fill',
+                question: '1. A person with good qualifications is bound to have brighter ...... than someone without.',
+                correct: 'prospects',
+                accept: ['prospects', 'prospect']
+            },
+            {
+                type: 'fill',
+                question: '2. The local shops are giving away sets of kitchen knives ...... with every purchase over £50.',
+                correct: 'free',
+                accept: ['free']
+            },
+            {
+                type: 'fill',
+                question: '3. The news ...... so quickly round the office that by the end of the day, everyone had heard it.',
+                correct: 'circulated',
+                accept: ['circulated', 'circulate']
+            },
+            {
+                type: 'fill',
+                question: '4. Many of the ...... had no information as to what difficulties they would face once they arrived in their new land.',
+                correct: 'pioneers',
+                accept: ['pioneers', 'pioneer']
+            },
+            {
+                type: 'fill',
+                question: '5. She ...... wanted a bicycle, and begged her parents day and night for one.',
+                correct: 'desperately',
+                accept: ['desperately']
+            }
+        ];
+
+        // VOCABULARY QUIZ (Uzbek → English translation)
+        const VOCAB_QUESTIONS = [
+            { uzbek: 'ish o‘rin (joy)', correct: 'situation', accept: ['situation'] },
+            { uzbek: 'yiliga', correct: 'per annum', accept: ['per annum', 'per annuum'] },
+            { uzbek: 'maosh (ish haqi)', correct: 'wages', accept: ['wages', 'wage'] },
+            { uzbek: 'tarqatmoq (aylanmoq)', correct: 'circulate', accept: ['circulate', 'circulated'] },
+            { uzbek: 'chordoq', correct: 'attic', accept: ['attic'] },
+            { uzbek: 'ishga olish (yollash)', correct: 'recruiting', accept: ['recruiting', 'recruit'] },
+            { uzbek: 'juda zarur (qattiq)', correct: 'desperately', accept: ['desperately'] },
+            { uzbek: 'kashshof (ilk ko‘chmanchi)', correct: 'pioneer', accept: ['pioneer', 'pioneers'] },
+            { uzbek: 'istiqbollar (kelajak imkoniyatlari)', correct: 'prospects', accept: ['prospects', 'prospect'] },
+            { uzbek: 'chet el (dengiz orti)', correct: 'overseas', accept: ['overseas'] },
+            { uzbek: 'bepul', correct: 'free', accept: ['free'] },
+            { uzbek: 'yordam ko‘rsatilgan', correct: 'assisted', accept: ['assisted'] },
+            { uzbek: 'safar (kemada sayohat)', correct: 'passage', accept: ['passage'] }
+        ];
+
+        // ============================================================
+        //  STATE
+        // ============================================================
+        let currentQuizType = 'main'; // 'main' or 'vocab'
+        let currentQuestions = [];
+        let shuffledQuestions = [];
+        let currentIndex = 0;
+        let correctAnswers = 0;
+        let wrongAnswers = 0;
+        let mistakes = [];
+        let quizStarted = false;
+        let quizFinished = false;
+        let answered = false;
+
+        // DOM refs
+        const startBtn = document.getElementById('startBtn');
+        const startBtnWrapper = document.getElementById('startBtnWrapper');
+        const questionDisplay = document.getElementById('questionDisplay');
+        const finishDisplay = document.getElementById('finishDisplay');
+        const statsContainer = document.getElementById('statsContainer');
+        const correctCountEl = document.getElementById('correctCount');
+        const wrongCountEl = document.getElementById('wrongCount');
+        const remainingCountEl = document.getElementById('remainingCount');
+        const accuracyDisplay = document.getElementById('accuracyDisplay');
+        const progressFill = document.getElementById('progressFill');
+        const progressLabel = document.getElementById('progressLabel');
+        const restartBtn = document.getElementById('restartBtn');
+        const toggleTextBtn = document.getElementById('toggleTextBtn');
+        const passageContent = document.getElementById('passageContent');
+        const quizTypeSelector = document.getElementById('quizTypeSelector');
+
+        // ============================================================
+        //  QUOTE ROTATOR
+        // ============================================================
+        const quotes = [
+            "The only true wisdom is in knowing you know nothing. – Socrates",
+            "Education is the kindling of a flame, not the filling of a vessel. – Socrates",
+            "The more that you read, the more things you will know. – Dr. Seuss",
+            "Knowledge is power. – Francis Bacon",
+            "Learning never exhausts the mind. – Leonardo da Vinci",
+            "The beautiful thing about learning is that nobody can take it away from you. – B.B. King"
+        ];
+        let quoteIndex = 0;
+        const quoteEl = document.getElementById('quoteText');
+        function rotateQuote() {
+            quoteEl.textContent = quotes[quoteIndex % quotes.length];
+            quoteIndex++;
+        }
+        rotateQuote();
+        setInterval(rotateQuote, 10000);
+
+        // ============================================================
+        //  SHUFFLE
+        // ============================================================
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // ============================================================
+        //  QUIZ TYPE SWITCH
+        // ============================================================
+        function switchQuizType(type) {
+            currentQuizType = type;
+            // Update button active state
+            document.querySelectorAll('.quiz-type-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.type === type);
+            });
+            // Reset everything
+            resetQuizState();
+            // Show start button
+            startBtnWrapper.classList.remove('hidden');
+            questionDisplay.classList.add('hidden');
+            finishDisplay.classList.add('hidden');
+            statsContainer.classList.add('hidden');
+            progressFill.style.width = '0%';
+            progressLabel.textContent = '0 / 0';
+            correctCountEl.textContent = '0';
+            wrongCountEl.textContent = '0';
+            remainingCountEl.textContent = '0';
+            accuracyDisplay.textContent = '0%';
+            questionDisplay.innerHTML = '';
+        }
+
+        // ============================================================
+        //  START QUIZ
+        // ============================================================
+        function startQuiz() {
+            // Determine which question set to use
+            const baseQuestions = (currentQuizType === 'main') ? MAIN_QUESTIONS : VOCAB_QUESTIONS.map(q => ({
+                type: 'fill',
+                question: q.uzbek,
+                correct: q.correct,
+                accept: q.accept
+            }));
+            shuffledQuestions = shuffleArray([...baseQuestions]);
+            // For MCQ, shuffle options
+            shuffledQuestions = shuffledQuestions.map(q => {
+                if (q.type === 'mcq') {
+                    const optList = q.options.map(opt => {
+                        const letter = opt.charAt(0);
+                        const text = opt.substring(3);
+                        return { letter, text };
+                    });
+                    const shuffledOpts = shuffleArray([...optList]);
+                    const newOptions = shuffledOpts.map((item, idx) => {
+                        const newLetter = String.fromCharCode(65 + idx);
+                        return `${newLetter}) ${item.text}`;
+                    });
+                    const correctLetter = q.correct;
+                    const correctText = optList.find(o => o.letter === correctLetter).text;
+                    const newCorrectLetter = shuffledOpts.find(o => o.text === correctText).letter;
+                    return { ...q, options: newOptions, correct: newCorrectLetter };
+                }
+                return q;
+            });
+
+            currentIndex = 0;
+            correctAnswers = 0;
+            wrongAnswers = 0;
+            mistakes = [];
+            quizStarted = true;
+            quizFinished = false;
+            answered = false;
+
+            startBtnWrapper.classList.add('hidden');
+            statsContainer.classList.remove('hidden');
+            finishDisplay.classList.add('hidden');
+            questionDisplay.classList.remove('hidden');
+
+            renderQuestion();
+            updateStats();
+        }
+
+        // ============================================================
+        //  RENDER QUESTION
+        // ============================================================
+        function renderQuestion() {
+            if (currentIndex >= shuffledQuestions.length) {
+                finishQuiz();
+                return;
+            }
+
+            const q = shuffledQuestions[currentIndex];
+            const total = shuffledQuestions.length;
+            const num = currentIndex + 1;
+
+            let html = `<div class="question-block">`;
+            html += `<div class="question-number">Question ${num} of ${total}</div>`;
+            html += `<div class="question-text">${q.question}</div>`;
+
+            if (q.type === 'mcq') {
+                html += `<div class="options-grid" id="optionsGrid">`;
+                q.options.forEach((opt, idx) => {
+                    const letter = opt.charAt(0);
+                    const text = opt.substring(3);
+                    html += `
+                        <div class="option-item" data-letter="${letter}" data-optindex="${idx}">
+                            <span class="letter">${letter}</span>
+                            <span>${text}</span>
+                            <span class="check-mark"></span>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+            } else {
+                // Fill-in (for both main fill and vocab)
+                const placeholder = (currentQuizType === 'vocab') ? 'Type English translation...' : 'Type your answer...';
+                html += `
+                    <div class="fill-group">
+                        <input type="text" id="fillInput" placeholder="${placeholder}" autocomplete="off" />
+                        <button class="check-btn" id="fillCheckBtn">Check</button>
+                    </div>
+                    <div class="fill-feedback" id="fillFeedback"></div>
+                `;
+            }
+
+            html += `</div>`;
+            questionDisplay.innerHTML = html;
+
+            if (q.type === 'mcq') {
+                const options = document.querySelectorAll('.option-item');
+                options.forEach(opt => {
+                    opt.addEventListener('click', function() {
+                        if (answered) return;
+                        handleMCQClick(this);
+                    });
+                });
+            } else {
+                const input = document.getElementById('fillInput');
+                const checkBtn = document.getElementById('fillCheckBtn');
+                const feedback = document.getElementById('fillFeedback');
+
+                function checkFill() {
+                    if (answered) return;
+                    const userAnswer = input.value.trim();
+                    if (userAnswer === '') return;
+                    handleFillSubmit(userAnswer, input, checkBtn, feedback);
+                }
+
+                checkBtn.addEventListener('click', checkFill);
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        checkFill();
+                    }
+                });
+                setTimeout(() => input.focus(), 100);
+            }
+
+            answered = false;
+            updateStats();
+        }
+
+        // ============================================================
+        //  HANDLE MCQ
+        // ============================================================
+        function handleMCQClick(optEl) {
+            const q = shuffledQuestions[currentIndex];
+            const selectedLetter = optEl.dataset.letter;
+            const isCorrect = (selectedLetter === q.correct);
+
+            const allOpts = document.querySelectorAll('.option-item');
+            allOpts.forEach(el => el.classList.add('disabled'));
+
+            allOpts.forEach(el => {
+                const letter = el.dataset.letter;
+                if (letter === q.correct) {
+                    el.classList.add('correct');
+                    el.querySelector('.check-mark').textContent = '✅';
+                } else if (letter === selectedLetter && !isCorrect) {
+                    el.classList.add('wrong');
+                    el.querySelector('.check-mark').textContent = '❌';
+                }
+                if (letter === selectedLetter) {
+                    el.classList.add('selected');
+                }
+            });
+
+            if (isCorrect) {
+                correctAnswers++;
+            } else {
+                wrongAnswers++;
+                const correctText = q.options.find(o => o.charAt(0) === q.correct).substring(3);
+                mistakes.push({
+                    question: q.question,
+                    userAnswer: selectedLetter + ') ' + optEl.querySelector('span:last-child').textContent.trim(),
+                    correctAnswer: q.correct + ') ' + correctText
+                });
+            }
+
+            answered = true;
+            updateStats();
+            setTimeout(() => {
+                currentIndex++;
+                renderQuestion();
+            }, 1000);
+        }
+
+        // ============================================================
+        //  HANDLE FILL (with multiple accepted answers)
+        // ============================================================
+        function handleFillSubmit(userAnswer, input, checkBtn, feedback) {
+            const q = shuffledQuestions[currentIndex];
+            const accepted = q.accept || [q.correct];
+            const isCorrect = accepted.some(a => userAnswer.toLowerCase().trim() === a.toLowerCase().trim());
+
+            input.disabled = true;
+            checkBtn.disabled = true;
+
+            if (isCorrect) {
+                feedback.className = 'fill-feedback correct';
+                feedback.textContent = '✅ Correct! Well done!';
+                correctAnswers++;
+            } else {
+                feedback.className = 'fill-feedback wrong';
+                feedback.textContent = `❌ Wrong. The correct answer is: "${q.correct}"`;
+                wrongAnswers++;
+                mistakes.push({
+                    question: q.question,
+                    userAnswer: userAnswer,
+                    correctAnswer: q.correct
+                });
+            }
+
+            answered = true;
+            updateStats();
+            setTimeout(() => {
+                currentIndex++;
+                renderQuestion();
+            }, 1500);
+        }
+
+        // ============================================================
+        //  UPDATE STATS
+        // ============================================================
+        function updateStats() {
+            const total = shuffledQuestions.length;
+            const answeredCount = correctAnswers + wrongAnswers;
+            const remaining = total - answeredCount;
+            const accuracy = answeredCount === 0 ? 0 : Math.round((correctAnswers / answeredCount) * 100);
+
+            correctCountEl.textContent = correctAnswers;
+            wrongCountEl.textContent = wrongAnswers;
+            remainingCountEl.textContent = remaining;
+            accuracyDisplay.textContent = accuracy + '%';
+
+            const progress = total === 0 ? 0 : (answeredCount / total) * 100;
+            progressFill.style.width = progress + '%';
+            progressLabel.textContent = `${answeredCount} / ${total}`;
+        }
+
+        // ============================================================
+        //  FINISH QUIZ
+        // ============================================================
+        function finishQuiz() {
+            quizFinished = true;
+            questionDisplay.classList.add('hidden');
+            statsContainer.classList.add('hidden');
+
+            let html = `<div style="text-align:center; padding:10px 0;">`;
+            html += `<h2 style="color:var(--gold);">🎉 Quiz Complete!</h2>`;
+            const total = shuffledQuestions.length;
+            const accuracy = total === 0 ? 0 : Math.round((correctAnswers / total) * 100);
+            html += `<p style="margin:10px 0; font-size:1.1rem;">✅ Correct: ${correctAnswers} &nbsp;|&nbsp; ❌ Wrong: ${wrongAnswers} &nbsp;|&nbsp; 🎯 Accuracy: ${accuracy}%</p>`;
+
+            if (mistakes.length > 0) {
+                html += `<div class="mistakes-summary"><h3>📝 Mistakes Review</h3>`;
+                mistakes.forEach((m, idx) => {
+                    html += `
+                        <div class="mistake-item">
+                            <strong>Q${idx+1}:</strong> ${m.question}<br />
+                            <span class="wrong-answer">Your answer: ${m.userAnswer}</span><br />
+                            <span class="correct-answer">Correct answer: ${m.correctAnswer}</span>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+            } else {
+                html += `<p style="color:#4ade80; font-size:1.2rem;">🌟 Perfect! No mistakes!</p>`;
+            }
+            html += `</div>`;
+            finishDisplay.innerHTML = html;
+            finishDisplay.classList.remove('hidden');
+        }
+
+        // ============================================================
+        //  RESTART / RESET
+        // ============================================================
+        function resetQuizState() {
+            quizStarted = false;
+            quizFinished = false;
+            shuffledQuestions = [];
+            currentIndex = 0;
+            correctAnswers = 0;
+            wrongAnswers = 0;
+            mistakes = [];
+            answered = false;
+            statsContainer.classList.add('hidden');
+            questionDisplay.classList.add('hidden');
+            finishDisplay.classList.add('hidden');
+            startBtnWrapper.classList.remove('hidden');
+            progressFill.style.width = '0%';
+            progressLabel.textContent = '0 / 0';
+            correctCountEl.textContent = '0';
+            wrongCountEl.textContent = '0';
+            remainingCountEl.textContent = '0';
+            accuracyDisplay.textContent = '0%';
+            questionDisplay.innerHTML = '';
+        }
+
+        function restartQuiz() {
+            resetQuizState();
+        }
+
+        // ============================================================
+        //  EVENT LISTENERS
+        // ============================================================
+        startBtn.addEventListener('click', startQuiz);
+        restartBtn.addEventListener('click', restartQuiz);
+
+        // Quiz type switch
+        document.querySelectorAll('.quiz-type-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                switchQuizType(this.dataset.type);
+            });
+        });
+
+        // Toggle full text
+        toggleTextBtn.addEventListener('click', function() {
+            const content = document.getElementById('passageContent');
+            content.classList.toggle('open');
+            this.classList.toggle('active');
+            this.textContent = content.classList.contains('open') ? '📖 Hide full text' : '📖 Read full text';
+        });
+
+        // ============================================================
+        //  STARS & SHOOTING STARS
+        // ============================================================
+        (function createStars() {
+            const bg = document.getElementById('space-bg');
+            const count = 160;
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = 1.5 + Math.random() * 3;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.setProperty('--dur', (2 + Math.random() * 4) + 's');
+                star.style.animationDelay = (Math.random() * 5) + 's';
+                bg.appendChild(star);
+            }
+        })();
+        (function createShootingStars() {
+            const bg = document.getElementById('space-bg');
+            for (let i = 0; i < 4; i++) {
+                const ss = document.createElement('div');
+                ss.className = 'shooting-star';
+                ss.style.left = (10 + Math.random() * 70) + '%';
+                ss.style.top = (5 + Math.random() * 40) + '%';
+                ss.style.animationDuration = (6 + Math.random() * 10) + 's';
+                ss.style.animationDelay = (Math.random() * 20) + 's';
+                ss.style.width = (2 + Math.random() * 3) + 'px';
+                ss.style.height = ss.style.width;
+                bg.appendChild(ss);
+            }
+        })();
+
+        console.log('🌌 ELS BOOK · Quiz 1 (with Vocabulary) loaded! ✨');
+        console.log('💕 done by nappicoo with love');
+    </script>
+</body>
+  </html>
